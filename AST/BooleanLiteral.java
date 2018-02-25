@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class BooleanLiteral extends Expression{
-    Boolean val;
+    public Boolean val;
 
     public BooleanLiteral(Boolean v, int ln, int os){
         val = v;
@@ -9,7 +10,7 @@ public class BooleanLiteral extends Expression{
         offset = os;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }    

@@ -1,24 +1,29 @@
 package AST;
+import Print.*;
 import java.util.Vector;
 
 public class EqualityExpression extends Expression{
-    Vector lessExpressions;
+    Vector expressions;
+    public Expression expr1;
+    public Expression expr2;
 
     public EqualityExpression(){
-        lessExpressions = new Vector();
+        expressions = new Vector();
     }
-
-    public void addElement(LessThanExpression e){
-        lessExpressions.addElement(e);
+    public void addElement(Expression e){
+        expressions.addElement(e);
     }
-    public LessThanExpression elementAt(int index){
-        return (LessThanExpression)lessExpressions.elementAt(index);
+    public Expression elementAt(int index){
+        return (Expression)expressions.elementAt(index);
     }
     public int size(){
-        return lessExpressions.size();
+        return expressions.size();
     }
-
-    public void accept(Visitor v){
+    public EqualityExpression(Expression e1, Expression e2){
+        expr1 = e1;
+        expr2 = e2;
+    }
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

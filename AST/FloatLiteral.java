@@ -1,8 +1,8 @@
-
 package AST;
+import Print.*;
 
 public class FloatLiteral extends Expression{
-    Float val;
+    public float val;
 
     public FloatLiteral(Float v, int ln, int os){
         val = v;
@@ -10,7 +10,7 @@ public class FloatLiteral extends Expression{
         offset = os;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }    

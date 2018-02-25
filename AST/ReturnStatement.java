@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class ReturnStatement extends Statement{
-    Expression expr;
+    public Expression expr;
 
     public ReturnStatement(Expression e){
         expr = e;
@@ -11,7 +12,7 @@ public class ReturnStatement extends Statement{
         return "return";
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

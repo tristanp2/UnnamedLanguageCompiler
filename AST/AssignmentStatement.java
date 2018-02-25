@@ -1,8 +1,9 @@
 package AST;
+import Print.*;
 
 public abstract class AssignmentStatement extends Statement{
-    Identifier id;
-    Expression expr;
+    public Identifier id;
+    public Expression expr;
     public String toString(){
         return "";
     }

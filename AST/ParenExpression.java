@@ -1,13 +1,14 @@
 package AST;
+import Print.*;
 
 public class ParenExpression extends Expression{
-    Expression expr;
+    public Expression expr;
 
     public ParenExpression(Expression e){
         expr = e;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

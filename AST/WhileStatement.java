@@ -1,8 +1,9 @@
 package AST;
+import Print.*;
 
 public class WhileStatement extends Statement{
-    Expression condition;
-    Block body;
+    public Expression condition;
+    public Block body;
 
     public WhileStatement(Expression c, Block b){
         condition = c;
@@ -12,7 +13,7 @@ public class WhileStatement extends Statement{
         return "while";
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

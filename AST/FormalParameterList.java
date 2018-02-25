@@ -1,4 +1,5 @@
 package AST;
+import Print.*;
 import java.util.Vector;
 
 public class FormalParameterList extends ASTNode{
@@ -18,7 +19,7 @@ public class FormalParameterList extends ASTNode{
         return paramList.size();
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

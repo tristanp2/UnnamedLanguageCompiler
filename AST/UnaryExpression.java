@@ -1,9 +1,10 @@
 package AST;
+import Print.*;
 
 //wait... are these even allowed???
 public class UnaryExpression extends Expression{
-    Expression expr;
-    Boolean negate;
+    public Expression expr;
+    public Boolean negate;
 
     public UnaryExpression(Expression e, Boolean n){
         expr = e;
@@ -13,7 +14,7 @@ public class UnaryExpression extends Expression{
         return negate;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

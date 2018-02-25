@@ -1,16 +1,17 @@
 package AST;
+import Print.*;
 import java.util.Vector;
 
 public class Function extends ASTNode{
-    FunctionDeclaration funcDec;
-    FunctionBody funcBody;
+    public FunctionDeclaration funcDec;
+    public FunctionBody funcBody;
 
     public Function(FunctionDeclaration fd, FunctionBody fb){
         funcDec = fd;
         funcBody = fb;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

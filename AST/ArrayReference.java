@@ -1,15 +1,16 @@
 package AST;
+import Print.*;
 
 public class ArrayReference extends Expression{
-    Identifier id;
-    Expression index;
+    public Identifier id;
+    public Expression index;
 
     public ArrayReference(Identifier i, Expression e){
         id = i;
         index = e;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

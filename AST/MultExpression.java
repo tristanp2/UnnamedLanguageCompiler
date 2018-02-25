@@ -1,24 +1,30 @@
 package AST;
+import Print.*;
 import java.util.Vector;
 
 public class MultExpression extends Expression{
-    Vector unaryExpressions;
+    Vector expressions;
+    public Expression expr1;
+    public Expression expr2;
 
     public MultExpression(){
-        unaryExpressions = new Vector();
+        expressions = new Vector();
     }
-
-    public void addElement(UnaryExpression e){
-        unaryExpressions.addElement(e);
+    public void addElement(Expression e){
+        expressions.addElement(e);
     }
-    public UnaryExpression elementAt(int index){
-        return (UnaryExpression)unaryExpressions.elementAt(index);
+    public Expression elementAt(int index){
+        return (Expression)expressions.elementAt(index);
     }
     public int size(){
-        return unaryExpressions.size();
+        return expressions.size();
+    }
+    public MultExpression(Expression e1, Expression e2){
+        expr1 = e1;
+        expr2 = e2;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

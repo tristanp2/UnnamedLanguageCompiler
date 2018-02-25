@@ -1,4 +1,5 @@
 package AST;
+import Print.*;
 
 public class VariableAssignment extends AssignmentStatement{
     public VariableAssignment(Identifier i, Expression e){
@@ -6,7 +7,7 @@ public class VariableAssignment extends AssignmentStatement{
         expr = e;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

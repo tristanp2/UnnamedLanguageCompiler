@@ -1,8 +1,9 @@
 package AST;
+import Print.*;
 import Types.*;
 
 public class TypeNode extends ASTNode{
-    Type type;
+    public Type type;
 
     public TypeNode(Type t, int ln, int os){
         type = t;
@@ -13,7 +14,7 @@ public class TypeNode extends ASTNode{
         return type;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

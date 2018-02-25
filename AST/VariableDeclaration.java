@@ -1,4 +1,5 @@
 package AST;
+import Print.*;
 
 public class VariableDeclaration extends Declaration{
     public VariableDeclaration(TypeNode t, Identifier i){
@@ -8,7 +9,7 @@ public class VariableDeclaration extends Declaration{
         id = i;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

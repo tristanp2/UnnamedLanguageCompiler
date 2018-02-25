@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class Identifier extends ASTNode{
-    String name;
+    public String name;
 
     public Identifier(String n, int ln, int os){
         name = n;
@@ -9,7 +10,7 @@ public class Identifier extends ASTNode{
         offset = os;
     }
     
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

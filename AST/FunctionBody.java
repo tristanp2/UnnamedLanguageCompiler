@@ -1,4 +1,5 @@
 package AST;
+import Print.*;
 import java.util.Vector;
 
 public class FunctionBody extends ASTNode{
@@ -30,7 +31,7 @@ public class FunctionBody extends ASTNode{
         return statementList.size();
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

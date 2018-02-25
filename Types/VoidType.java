@@ -1,8 +1,8 @@
 package Types;
-import AST.Visitor;
+import Print.*;
 
 public class VoidType extends Type{
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 

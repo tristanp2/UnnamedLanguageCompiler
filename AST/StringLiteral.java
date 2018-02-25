@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class StringLiteral extends Expression{
-    String val;
+    public String val;
 
     public StringLiteral(String v, int ln, int os){
         val = v;
@@ -9,7 +10,7 @@ public class StringLiteral extends Expression{
         offset = os;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }    

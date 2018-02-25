@@ -8,6 +8,7 @@
 import org.antlr.runtime.*;
 import java.io.*;
 import AST.*;
+import Print.*;
 
 public class Compiler {
     public static void walk(Program p){

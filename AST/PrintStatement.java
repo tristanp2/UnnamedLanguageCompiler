@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class PrintStatement extends Statement{
-    Expression expr;
+    public Expression expr;
 
     public PrintStatement(Expression e){
         expr = e;
@@ -11,7 +12,7 @@ public class PrintStatement extends Statement{
         return "print";
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

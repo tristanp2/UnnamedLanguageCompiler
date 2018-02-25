@@ -1,15 +1,16 @@
 package AST;
+import Print.*;
 
 public class FormalParameter extends ASTNode{
-    TypeNode type;
-    Identifier id;
+    public TypeNode type;
+    public Identifier id;
 
     public FormalParameter(TypeNode t, Identifier i){
         type = t;
         id = i;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

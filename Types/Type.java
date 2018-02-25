@@ -1,8 +1,8 @@
 package Types;
-import AST.Visitor;
+import Print.*;
 
 public abstract class Type{
-    public abstract void accept(Visitor v);
+    public abstract void accept(VoidVisitor v);
     public abstract String toString();
     public abstract boolean equals (Object o);
 }

@@ -1,7 +1,8 @@
 package AST;
+import Print.*;
 
 public class ArrayAssignment extends AssignmentStatement{
-    Expression index;
+    public Expression index;
 
     public ArrayAssignment(Identifier i, Expression ind, Expression e){
         id = i;
@@ -9,7 +10,7 @@ public class ArrayAssignment extends AssignmentStatement{
         expr = e;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

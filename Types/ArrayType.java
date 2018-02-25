@@ -1,5 +1,5 @@
 package Types;
-import AST.Visitor;
+import Print.*;
 
 public class ArrayType extends Type{
     Type elementType;
@@ -10,7 +10,7 @@ public class ArrayType extends Type{
         elementType = et;
         size = s;
     }
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 

@@ -1,8 +1,9 @@
 package AST;
+import Print.*;
 
 public class FunctionCall extends Expression{
-    Identifier id;
-    ExpressionList exprList;
+    public Identifier id;
+    public ExpressionList exprList;
 
     public FunctionCall(Identifier i, ExpressionList el){
         id = i;
@@ -11,7 +12,7 @@ public class FunctionCall extends Expression{
         offset = i.offset;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

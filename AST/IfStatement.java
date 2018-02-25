@@ -1,9 +1,10 @@
 package AST;
+import Print.*;
 
 public class IfStatement extends Statement{
-    Block ifBlock;
-    Block elseBlock;
-    Expression condition;
+    public Block ifBlock;
+    public Block elseBlock;
+    public Expression condition;
 
     public IfStatement(Expression c, Block ib, Block eb){
         condition = c;
@@ -21,7 +22,7 @@ public class IfStatement extends Statement{
         return elseBlock != null;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

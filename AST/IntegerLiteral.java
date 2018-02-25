@@ -1,8 +1,8 @@
-
 package AST;
+import Print.*;
 
 public class IntegerLiteral extends Expression{
-    Integer val;
+    public Integer val;
 
     public IntegerLiteral(Integer v, int ln, int os){
         val = v;
@@ -11,7 +11,7 @@ public class IntegerLiteral extends Expression{
         return val;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }    

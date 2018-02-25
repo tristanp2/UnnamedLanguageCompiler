@@ -1,13 +1,14 @@
 package AST;
+import Print.*;
 
 public class IdentifierValue extends Expression{
-    Identifier id;
+    public Identifier id;
 
     public IdentifierValue(Identifier i){
         id = i;
     }
 
-    public void accept(Visitor v){
+    public void accept(VoidVisitor v){
         v.visit(this);
     }
 }

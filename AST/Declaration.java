@@ -1,6 +1,7 @@
 package AST;
+import Print.*;
 
 public abstract class Declaration extends ASTNode{
-    TypeNode type;
-    Identifier id;
+    public TypeNode type;
+    public Identifier id;
 }

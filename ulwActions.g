@@ -1,4 +1,4 @@
-//CSC435 Assignment1 Part 2: Grammar for Unnamed Language
+//Grammar for Unnamed Language
 //
 //Tristan Partridge
 //V00804280
@@ -174,20 +174,29 @@ exprList returns [ExpressionList el]
     :
     e1=expr {el.addElement(e1);} (',' e2=expr {el.addElement(e2);})*
     ;
-expr returns [EqualityExpression ee]
+
+expr returns [EqualityExpression ee] options {backtrack=true;}:
+    e1=lessExpr EQUAL e2=lessExpr {ee = new EqualityExpression(e1,e2);}
+    | e1=lessExpr {ee = new EqualityExpression(e1,null);} 
+    ;
+/*expr returns [EqualityExpression ee]
 @init{
     ee = new EqualityExpression();
 }
     :
     e1=lessExpr {ee.addElement(e1);} (EQUAL e2=lessExpr {ee.addElement(e2);})* 
-    ; 
-lessExpr returns [LessThanExpression le]
+    ;*/ 
+lessExpr returns [LessThanExpression le] options {backtrack=true;}:
+    e1=addSubExpr LESS e2=lessExpr {le = new LessThanExpression(e1,e2);}
+    | e1=addSubExpr {le = new LessThanExpression(e1,null);}
+    ;
+/*lessExpr returns [LessThanExpression le]
 @init{
     le = new LessThanExpression();
 }
     :
     e1=addSubExpr {le.addElement(e1);} (LESS e2=addSubExpr {le.addElement(e2);})*
-    ;
+    ;*/
 addSubExpr returns [Expression ae] options {backtrack=true;}:
     e1=multExpr PLUS e2=addSubExpr {ae = new AddExpression(e1,e2);}
     | e1=multExpr MINUS e2=addSubExpr {ae = new SubtractExpression(e1,e2);}
@@ -198,20 +207,24 @@ addSubExpr returns [Expression ae] options {backtrack=true;}:
     | e1=multExpr MINUS e2=addExpr {ae = new AddExpression(e1,e2,true);}
     | e1=multExpr {ae = new AddExpression(e1, null, false);}
     ;*/
-multExpr returns [MultExpression me]
+multExpr returns [MultExpression me] options {backtrack=true;}:
+    e1=unaryExpr MULT e2=multExpr {me = new MultExpression(e1,e2);}
+    | e1=unaryExpr {me = new MultExpression(e1,null);}
+    ;
+/*multExpr returns [MultExpression me]
 @init{
     me = new MultExpression();
 }
     :
     e1=unaryExpr {me.addElement(e1);} (MULT e2=unaryExpr {me.addElement(e2);})*
-    ;
+    ;*/
 unaryExpr returns [UnaryExpression ue]:
     MINUS e1=primExpr {ue = new UnaryExpression(e1, true);}
     | e1=primExpr {ue =  new UnaryExpression(e1, false);}
-    ;
+;
 //should types be restricted depending on expression?
 //assuming no for now, since grammar doesn't mention it
-primExpr returns [Expression e]:
+primExpr returns [Expression e] options {backtrack=true;}:
     i=id '(' el=exprList ')' {e = new FunctionCall(i,el); }
     | i=id '(' ')' {e = new FunctionCall(i,null);}
     | '(' e1=expr ')' {e = new ParenExpression(e1);} 
