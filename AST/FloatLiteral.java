@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class FloatLiteral extends Expression{
     public float val;

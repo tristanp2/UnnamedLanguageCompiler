@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class CharacterLiteral extends Expression{
     public Character val;

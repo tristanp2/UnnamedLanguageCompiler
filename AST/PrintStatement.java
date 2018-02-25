@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class PrintStatement extends Statement{
     public Expression expr;

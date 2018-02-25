@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class ArrayAssignment extends AssignmentStatement{
     public Expression index;

@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public abstract class Statement extends ASTNode{
     public abstract String toString();

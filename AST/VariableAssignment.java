@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class VariableAssignment extends AssignmentStatement{
     public VariableAssignment(Identifier i, Expression e){

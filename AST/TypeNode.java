@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 import Types.*;
 
 public class TypeNode extends ASTNode{

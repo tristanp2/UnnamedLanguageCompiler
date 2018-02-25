@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class FormalParameter extends ASTNode{
     public TypeNode type;

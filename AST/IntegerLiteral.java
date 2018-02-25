@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class IntegerLiteral extends Expression{
     public Integer val;

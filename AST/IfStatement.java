@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class IfStatement extends Statement{
     public Block ifBlock;

@@ -1,5 +1,5 @@
 package Types;
-import Print.*;
+import Visitor.*;
 
 public class StringType extends Type{
 

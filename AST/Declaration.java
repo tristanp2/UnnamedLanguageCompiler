@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public abstract class Declaration extends ASTNode{
     public TypeNode type;

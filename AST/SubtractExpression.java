@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 import java.util.Vector;
 
 public class SubtractExpression extends Expression{

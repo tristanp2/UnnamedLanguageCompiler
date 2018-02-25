@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class BooleanLiteral extends Expression{
     public Boolean val;

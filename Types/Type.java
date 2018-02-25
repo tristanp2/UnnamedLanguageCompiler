@@ -1,5 +1,5 @@
 package Types;
-import Print.*;
+import Visitor.*;
 
 public abstract class Type{
     public abstract void accept(VoidVisitor v);

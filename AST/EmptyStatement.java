@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class EmptyStatement extends Statement{
     public void accept(VoidVisitor v){

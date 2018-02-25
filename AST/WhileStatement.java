@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class WhileStatement extends Statement{
     public Expression condition;

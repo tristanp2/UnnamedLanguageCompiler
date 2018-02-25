@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class VariableDeclaration extends Declaration{
     public VariableDeclaration(TypeNode t, Identifier i){

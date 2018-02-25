@@ -1,5 +1,5 @@
 package AST;
-import Print.*;
+import Visitor.*;
 
 public class ArrayReference extends Expression{
     public Identifier id;

@@ -1,5 +1,5 @@
 package Types;
-import Print.*;
+import Visitor.*;
 
 public class FloatType extends Type{
     public void accept(VoidVisitor v){
