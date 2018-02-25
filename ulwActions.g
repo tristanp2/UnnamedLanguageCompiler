@@ -84,8 +84,8 @@ varDec1 returns [VariableDeclaration vd]:
 compoundType returns [TypeNode t]: 
     t1=type {t = t1;}
     | et=type '[' i=intLit ']' {t = new TypeNode(new ArrayType(et.getType(), i.getVal()), 
-                                                                et.getLineNum(), 
-                                                                et.getOffset());
+                                                                et.line_number, 
+                                                                et.offset);
                                }
     ;
 
@@ -141,22 +141,24 @@ assignment returns [AssignmentStatement as]:
     
 
 ifStatement returns [IfStatement is] options {backtrack = true;}:
-    IF '(' c=expr ')' b1=block ELSE b2=block {is = new IfStatement(c, b1, b2);}
-    | IF '(' c=expr ')' b1=block    {is = new IfStatement(c, b1);}
+    IF '(' c=expr ')' b1=block ELSE b2=block {is = new IfStatement(c, b1, b2, $IF.getLine(),
+                                                                    $IF.getCharPositionInLine());}
+    | IF '(' c=expr ')' b1=block    {is = new IfStatement(c, b1, $IF.getLine(), 
+                                                                    $IF.getCharPositionInLine());}
     ;
 
 whileStatement returns [WhileStatement ws]:
-    WHILE '(' e=expr ')' b=block {ws = new WhileStatement(e, b);} 
+    WHILE '(' e=expr ')' b=block {ws = new WhileStatement(e, b, $WHILE.getLine(), $WHILE.getCharPositionInLine());} 
     ;
 
 printStatement returns [Statement s]:
-    PRINT e=expr ';' {s = new PrintStatement(e);}
-    | PRINTLN e=expr ';' {s = new PrintLnStatement(e);}
+    PRINT e=expr ';' {s = new PrintStatement(e, $PRINT.getLine(), $PRINT.getCharPositionInLine());}
+    | PRINTLN e=expr ';' {s = new PrintLnStatement(e, $PRINTLN.getLine(), $PRINTLN.getCharPositionInLine());}
     ;
     
 returnStatement returns [ReturnStatement rs]:
-    RETURN ';' {rs = new ReturnStatement(null);}
-    | RETURN e=expr ';' {rs = new ReturnStatement(e);}
+    RETURN ';' {rs = new ReturnStatement(null, $RETURN.getLine(), $RETURN.getCharPositionInLine());}
+    | RETURN e=expr ';' {rs = new ReturnStatement(e, $RETURN.getLine(), $RETURN.getCharPositionInLine());}
     ;
 
 block returns [Block b]
