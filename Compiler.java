@@ -12,8 +12,13 @@ import Visitor.*;
 
 public class Compiler {
     public static void walk(Program p){
-        PrintVisitor pv = new PrintVisitor(System.out);
-        p.accept(pv); 
+        TypeCheckVisitor tcv = new TypeCheckVisitor();
+        try{
+            p.accept(tcv); 
+        }
+        catch(SemanticException se){
+            System.out.println(se);
+        }
     }
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
