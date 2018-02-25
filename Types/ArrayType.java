@@ -17,6 +17,9 @@ public class ArrayType extends Type{
     public String toString(){
         return elementType.toString() + "[" + Integer.toString(size) + "]";
     }
+    public Type elementType(){
+        return elementType;
+    }
     public boolean equals (Object o){
         if(o instanceof ArrayType)
             if(((ArrayType)o).elementType == elementType)
