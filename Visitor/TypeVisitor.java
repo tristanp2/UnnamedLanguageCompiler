@@ -11,9 +11,12 @@ public interface TypeVisitor{
 	public Type visit (BooleanLiteral b) throws SemanticException;
 	public Type visit (CharacterLiteral c) throws SemanticException;
 	public Type visit (EqualityExpression e) throws SemanticException;
+	public Type visit (EmptyStatement es) throws SemanticException;
+	public Type visit (ExpressionList el) throws SemanticException;
 	public Type visit (ExpressionStatement e) throws SemanticException;
 	public Type visit (FloatLiteral f) throws SemanticException;	
 	public Type visit (FormalParameter p) throws SemanticException;
+	public Type visit (FormalParameterList fpl) throws SemanticException;
 	public Type visit (Function f) throws SemanticException;
 	public Type visit (FunctionBody f) throws SemanticException;
 	public Type visit (FunctionCall f) throws SemanticException;
@@ -33,6 +36,7 @@ public interface TypeVisitor{
 	public Type visit (SubtractExpression e) throws SemanticException;
 	public Type visit (Type t) throws SemanticException;
 	public Type visit (TypeNode t) throws SemanticException;
+	public Type visit (UnaryExpression e) throws SemanticException;
 	public Type visit (VariableAssignment s) throws SemanticException;
 	public Type visit (VariableDeclaration v) throws SemanticException;
 	public Type visit (WhileStatement s) throws SemanticException;
