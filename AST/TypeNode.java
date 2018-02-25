@@ -1,4 +1,5 @@
 package AST;
+import Types.*;
 import Visitor.*;
 import Types.*;
 
@@ -16,5 +17,8 @@ public class TypeNode extends ASTNode{
 
     public void accept(VoidVisitor v){
         v.visit(this);
+    }
+    public Type accept(TypeVisitor tv) throws SemanticException{
+        return tv.visit(this);
     }
 }

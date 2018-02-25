@@ -1,4 +1,5 @@
 package AST;
+import Types.*;
 import Visitor.*;
 
 //wait... are these even allowed???
@@ -17,6 +18,8 @@ public class UnaryExpression extends Expression{
     public void accept(VoidVisitor v){
         v.visit(this);
     }
-}
 
-        
+    public Type accept(TypeVisitor tv) throws SemanticException{
+        return tv.visit(this);
+    }
+}

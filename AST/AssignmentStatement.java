@@ -1,5 +1,7 @@
 package AST;
+import Types.*;
 import Visitor.*;
+import Types.Type;
 
 public abstract class AssignmentStatement extends Statement{
     public Identifier id;
@@ -8,4 +10,3 @@ public abstract class AssignmentStatement extends Statement{
         return "";
     }
 }
-   

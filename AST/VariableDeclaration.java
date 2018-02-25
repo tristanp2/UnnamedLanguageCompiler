@@ -1,4 +1,5 @@
 package AST;
+import Types.*;
 import Visitor.*;
 
 public class VariableDeclaration extends Declaration{
@@ -12,5 +13,7 @@ public class VariableDeclaration extends Declaration{
     public void accept(VoidVisitor v){
         v.visit(this);
     }
+    public Type accept(TypeVisitor tv) throws SemanticException{
+        return tv.visit(this);
+    }
 }
-        
