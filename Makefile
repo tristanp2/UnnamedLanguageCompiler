@@ -5,7 +5,7 @@ GSRC= $(GNAME).g
 all: grammar compiler
 
 grammar: $(GSRCS)
-	java org.antlr.Tool -fo . $(GSRC) 
+	java org.antlr.Tool -Xconversiontimeout 10000 -fo . $(GSRC) 
 
 compiler:
 	javac *.java AST/*.java Visitor/*.java Types/*.java Environment/*.java
