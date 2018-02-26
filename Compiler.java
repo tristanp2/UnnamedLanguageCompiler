@@ -11,7 +11,11 @@ import AST.*;
 import Visitor.*;
 
 public class Compiler {
-    public static void walk(Program p){
+    public static void print(Program p){
+        PrintVisitor pv = new PrintVisitor(System.out);
+        p.accept(pv);
+    }
+    public static void type_check(Program p){
         TypeCheckVisitor tcv = new TypeCheckVisitor();
         try{
             p.accept(tcv); 
@@ -22,6 +26,7 @@ public class Compiler {
     }
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
+        boolean do_print = false;
 
 		if (args.length == 0 ) {
 			System.out.println("Usage: Test filename.ul");
@@ -29,6 +34,9 @@ public class Compiler {
 		}
 		else {
 			input = new ANTLRInputStream(new FileInputStream(args[0]));
+            if(args.length > 1){
+                do_print = true;
+            }
 		}
 
 		// The name of the grammar here is "ulwActions",
@@ -38,7 +46,10 @@ public class Compiler {
 		ulwActionsParser parser = new ulwActionsParser(tokens);
 
 		try {
-			walk(parser.program());
+            if(do_print)
+			    print(parser.program());
+            else
+                type_check(parser.program());
 
 		}
 		catch (RecognitionException e )	{

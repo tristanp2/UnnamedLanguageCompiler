@@ -10,6 +10,8 @@ public class UnaryExpression extends Expression{
     public UnaryExpression(Expression e, Boolean n){
         expr = e;
         negate = n;
+        this.line_number = e.line_number;
+        this.offset = e.offset;
     }
     public boolean negated(){
         return negate;

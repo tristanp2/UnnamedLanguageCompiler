@@ -9,6 +9,8 @@ public class FormalParameter extends ASTNode{
     public FormalParameter(TypeNode t, Identifier i){
         type = t;
         id = i;
+        this.line_number = i.line_number;
+        this.offset = i.offset;
     }
 
     public void accept(VoidVisitor v){

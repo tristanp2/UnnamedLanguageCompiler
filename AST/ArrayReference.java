@@ -9,6 +9,8 @@ public class ArrayReference extends Expression{
     public ArrayReference(Identifier i, Expression e){
         id = i;
         index = e;
+        this.line_number = i.line_number;
+        this.offset = i.offset;
     }
 
     public void accept(VoidVisitor v){

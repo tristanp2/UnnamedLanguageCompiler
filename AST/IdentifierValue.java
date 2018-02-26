@@ -7,6 +7,8 @@ public class IdentifierValue extends Expression{
 
     public IdentifierValue(Identifier i){
         id = i;
+        this.line_number = i.line_number;
+        this.offset = i.offset;
     }
 
     public void accept(VoidVisitor v){

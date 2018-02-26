@@ -22,7 +22,7 @@ public class ArrayType extends Type{
     }
     public boolean equals (Object o){
         if(o instanceof ArrayType)
-            if(((ArrayType)o).elementType == elementType)
+            if(((ArrayType)o).elementType == elementType && ((ArrayType)o).size == size)
                 return true;
 
         return false;

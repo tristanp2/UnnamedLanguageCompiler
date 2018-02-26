@@ -6,6 +6,8 @@ public class VariableAssignment extends AssignmentStatement{
     public VariableAssignment(Identifier i, Expression e){
         id = i;
         expr = e;
+        this.line_number = i.line_number;
+        this.offset = i.offset;
     }
 
     public void accept(VoidVisitor v){
