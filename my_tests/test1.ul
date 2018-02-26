@@ -1,0 +1,19 @@
+void main(){
+    -2;
+    x-2;
+    -2.0;
+    'c';
+    "hello";
+    true;
+    func();
+    func(x);
+    func(x,x);
+    if(x)
+    {
+        return x*func(x);
+    }
+    else
+    {
+        return x;
+    }
+}

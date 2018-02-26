@@ -1,0 +1,19 @@
+// sample.ul
+int factorial (int n) {
+    if (n == 1) 
+    {
+        "string";
+    }
+    else 
+    {
+        return n*factorial(n-1);
+    }
+}
+void main () {
+    int x;
+    print "The factorial of 8 is ";
+    println factorial(8);
+    while(true){
+        print "Please work";
+    }
+}

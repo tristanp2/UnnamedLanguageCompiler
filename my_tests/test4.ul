@@ -1,0 +1,11 @@
+void main()
+{
+    int a1;
+    a();
+    a*a();
+    a = a + a;
+    a < a;
+    "Strng";
+    ((a + 1) == 2) == true;
+    "factorial blah";
+}
