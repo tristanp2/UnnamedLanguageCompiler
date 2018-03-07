@@ -204,19 +204,17 @@ public class TypeCheckVisitor implements TypeVisitor{
             throw new SemanticException("Duplicate function declaration --> " + f.id.name + " already declared",
                                         f.line_number, f.offset);
         }
-        if(f.paramList != null){
-            if(f.id.name.equals("main")){
-                throw new SemanticException("main function cannot take any parameters", f.line_number, f.offset);
-            }
-        }
 
         Type fType = f.type.accept(this);
         if(f.id.name.equals("main")){
-            if(fType.equals(new VoidType())){
-                main_encountered = true;
+            if(f.paramList != null){
+                throw new SemanticException("main function cannot take any parameters", f.line_number, f.offset);
+            }               
+            else if(!fType.equals(new VoidType())){
+                throw new SemanticException("main function must be of type void", f.line_number, f.offset);
             }
             else{
-                throw new SemanticException("main function must be of type void", f.line_number, f.offset);
+                main_encountered = true;
             }
         }
         functionEnvironment.add(f.id.name, new FunctionInfo(f.paramList, fType));
