@@ -1,6 +1,8 @@
 package Environment;
 import AST.*;
 import Types.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ListEnvironment implements Environment<String, Object>{
     private ListNode<String, Object> front;
@@ -12,10 +14,14 @@ public class ListEnvironment implements Environment<String, Object>{
     public void beginScope(){
         scope++;
     }
+    //End scope. Find start of current scope from front of list, and then disconnect
+    //  scope from rest of list, then decrement scope
     public void endScope(){
         if(front == null) return;
+
         ListNode<String,Object> temp = front;
-        ListNode<String,Object> prev = temp;
+        ListNode<String,Object> prev = front;
+
         while(temp != null && temp.scope != scope){
             prev = temp;
             temp = temp.next;
@@ -25,7 +31,6 @@ public class ListEnvironment implements Environment<String, Object>{
         if(prev.scope == scope)
             prev = null;
         front = prev;
-            
         scope--;
     }
     public void debugPrintScope(){
@@ -46,17 +51,39 @@ public class ListEnvironment implements Environment<String, Object>{
         else
             return temp.scope == scope;
     }
+    //return list of current scope
+    public List<Object> getList() {
+        List<Object> returnList = new ArrayList<Object>();
+        ListNode<String, Object> n = front;
+        while(n != null) {
+            returnList.add(n);
+            n = n.next;
+        }
+        return returnList;
+    }
+        
     public void add(String key, Object value){
         ListNode<String,Object> new_node = new ListNode<String,Object>(key,value,scope,front);
 
         front = new_node;
     }
+    // This returns the value rather than just the node
     public Object lookup(String key){
         ListNode<String,Object> temp = getNode(key);
         if(temp != null)
             return temp.value;
         else
             return null;
+    }
+    private int calcSize() {
+        int s = 0;
+        ListNode<String,Object> n = front;
+
+        while(n != null){
+            n = n.next;
+            s++;
+        }
+        return s;
     }
     private ListNode<String,Object> getNode(String key){
         ListNode<String,Object> temp = front;
