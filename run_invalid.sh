@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEST_DIR="./provided_tests/withoutSubtypes"
+TEST_DIR="./typing_tests/provided_tests/"
 
 for test_file in $TEST_DIR/*_invalid*.ul; do
     echo "|"
