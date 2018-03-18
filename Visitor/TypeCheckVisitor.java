@@ -29,8 +29,8 @@ public class TypeCheckVisitor implements TypeVisitor{
         Type t1 = e.expr1.accept(this);
         Type t2 = e.expr2.accept(this);
         
-        if(t1.equals(new IntegerType()) || t1.equals(new FloatType()) ||
-            t1.equals(new CharType()) || t1.equals(new StringType())){
+        if(t1.equals(TypeEnum.INTEGER) || t1.equals(TypeEnum.FLOAT) ||
+            t1.equals(TypeEnum.CHAR) || t1.equals(TypeEnum.STRING)){
             if(t1.equals(t2)){
                 return t1;
             }
@@ -50,7 +50,7 @@ public class TypeCheckVisitor implements TypeVisitor{
         ArrayType at = (ArrayType)variableEnvironment.lookup(s.id.name);
         Type exprType = s.expr.accept(this);
         Type indexType = s.index.accept(this);
-        if(!at.elementType().equals(exprType) || !indexType.equals(new IntegerType())){
+        if(!at.elementType().equals(exprType) || !indexType.equals(TypeEnum.INTEGER)){
             throw new SemanticException("Mismatched types in array assignment --> " + at.elementType() 
                                             + ", " + exprType, s.line_number, s.offset);
         }
@@ -69,7 +69,7 @@ public class TypeCheckVisitor implements TypeVisitor{
         }
 
         Type et = a.index.accept(this);
-        if(!et.equals(new IntegerType())){
+        if(!et.equals(TypeEnum.INTEGER)){
             throw new SemanticException("Index expression is of invalid type\n\tExpected: int" 
                                         + "\tGot: " + et, a.index.line_number, a.index.offset);
         }
@@ -96,7 +96,7 @@ public class TypeCheckVisitor implements TypeVisitor{
         Type t1 = e.expr1.accept(this);
         Type t2 = e.expr2.accept(this);
         
-        if(!t1.equals(new VoidType())){
+        if(!t1.equals(TypeEnum.VOID)){
             if(t1.equals(t2)){
                 return new BooleanType();
             }
@@ -125,7 +125,7 @@ public class TypeCheckVisitor implements TypeVisitor{
             throw new SemanticException("Name conflict in function parameters --> " + p.id.name
                                             , p.line_number, p.offset);
         }
-        else if(t.equals(new VoidType())){
+        else if(t.equals(TypeEnum.VOID)){
             throw new SemanticException("Parameter cannot be of type void", p.line_number, p.offset);
         }
         else{
@@ -210,7 +210,7 @@ public class TypeCheckVisitor implements TypeVisitor{
             if(f.paramList != null){
                 throw new SemanticException("main function cannot take any parameters", f.line_number, f.offset);
             }               
-            else if(!fType.equals(new VoidType())){
+            else if(!fType.equals(TypeEnum.VOID)){
                 throw new SemanticException("main function must be of type void", f.line_number, f.offset);
             }
             else{
@@ -231,7 +231,7 @@ public class TypeCheckVisitor implements TypeVisitor{
     }
 	public Type visit (IfStatement i) throws SemanticException {
         Type condExpr = i.condition.accept(this);
-        if(!condExpr.equals(new BooleanType())){
+        if(!condExpr.equals(TypeEnum.BOOLEAN)){
             throw new SemanticException("wrong condition type --> " + condExpr, i.line_number, i.offset);
         }
         i.ifBlock.accept(this);
@@ -248,7 +248,7 @@ public class TypeCheckVisitor implements TypeVisitor{
         Type t1 = e.expr1.accept(this);
         Type t2 = e.expr2.accept(this);
         
-        if(!t1.equals(new VoidType())){
+        if(!t1.equals(TypeEnum.BOOLEAN)){
             if(t1.equals(t2)){
                 return new BooleanType();
             }
@@ -267,7 +267,7 @@ public class TypeCheckVisitor implements TypeVisitor{
         Type t1 = e.expr1.accept(this);
         Type t2 = e.expr2.accept(this);
         
-        if(t1.equals(new IntegerType()) || t1.equals(new FloatType())){
+        if(t1.equals(TypeEnum.INTEGER) || t1.equals(TypeEnum.FLOAT)){
             if(t1.equals(t2)){
                 return t1;
             }
@@ -286,7 +286,7 @@ public class TypeCheckVisitor implements TypeVisitor{
     }
 	public Type visit (PrintLnStatement s) throws SemanticException {
         Type t = s.expr.accept(this);
-        if(t.equals(new VoidType())){
+        if(t.equals(TypeEnum.VOID)){
             throw new SemanticException("Invalid println expression. Cannot print void type", s.line_number,
                                             s.offset);
         }
@@ -294,7 +294,7 @@ public class TypeCheckVisitor implements TypeVisitor{
     }
 	public Type visit (PrintStatement s) throws SemanticException {
         Type t = s.expr.accept(this);
-        if(t.equals(new VoidType())){
+        if(t.equals(TypeEnum.VOID)){
             throw new SemanticException("Invalid print expression. Cannot print void type", s.line_number,
                                             s.offset);
         }
@@ -332,8 +332,8 @@ public class TypeCheckVisitor implements TypeVisitor{
         Type t1 = e.expr1.accept(this);
         Type t2 = e.expr2.accept(this);
         
-        if(t1.equals(new IntegerType()) || t1.equals(new FloatType()) ||
-            t1.equals(new CharType())){
+        if(t1.equals(TypeEnum.VOID) || t1.equals(TypeEnum.FLOAT) ||
+            t1.equals(TypeEnum.CHAR)){
             if(t1.equals(t2)){
                 return t1;
             }
@@ -374,7 +374,7 @@ public class TypeCheckVisitor implements TypeVisitor{
             throw new SemanticException("Duplicate variable declaration --> " + v.id.name + " already declared",
                                             v.line_number, v.offset);
         }
-        else if(v.type.accept(this).equals(new VoidType())){
+        else if(v.type.accept(this).equals(TypeEnum.VOID)){
             throw new SemanticException("Variable cannot be of type void", v.line_number, v.offset);
         }
         else{
@@ -384,7 +384,7 @@ public class TypeCheckVisitor implements TypeVisitor{
     }
 	public Type visit (WhileStatement s) throws SemanticException {
         Type condExpr = s.condition.accept(this);
-        if(!condExpr.equals(new BooleanType())){
+        if(!condExpr.equals(TypeEnum.BOOLEAN)){
             throw new SemanticException("wrong condition type --> " + condExpr, s.line_number, s.offset);
         }
 

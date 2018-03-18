@@ -4,9 +4,8 @@ import Visitor.*;
 public class ArrayType extends Type{
     Type elementType;
     int size;
-    public ArrayType(){
-        }
     public ArrayType(Type et, int s){
+        typeEnum = TypeEnum.ARRAY;
         elementType = et;
         size = s;
     }
@@ -15,15 +14,26 @@ public class ArrayType extends Type{
     }
 
     public String toString(){
-        return elementType.toString() + "[" + Integer.toString(size) + "]";
+        return toStringUL();
+    }
+    public String toStringUL(){
+        return elementType.toStringUL() + "[" + size + "]";
+    }
+    public String toStringIR(){
+        return  "A" + elementType.toStringIR(); 
     }
     public Type elementType(){
         return elementType;
     }
-    public boolean equals (Object o){
-        if(o instanceof ArrayType)
-            if(((ArrayType)o).elementType == elementType && ((ArrayType)o).size == size)
+    public boolean equals (TypeEnum te) {
+        return false;
+    }
+    public boolean equals (Type t){
+        if(t.typeEnum == typeEnum) {
+            ArrayType at = (ArrayType)t;
+            if(at.elementType.equals(elementType) && at.size == size)
                 return true;
+        }
 
         return false;
     }
