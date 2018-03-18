@@ -12,7 +12,7 @@ import Visitor.*;
 
 public class Compiler {
     public static void print(Program p){
-        PrintVisitor pv = new PrintVisitor(System.out);
+        ULPrintVisitor pv = new ULPrintVisitor(System.out);
         p.accept(pv);
     }
     public static void type_check(Program p){
@@ -29,15 +29,18 @@ public class Compiler {
         boolean do_print = false;
 
 		if (args.length == 0 ) {
-			System.out.println("Usage: Test filename.ul");
+			System.out.println("Usage: Test filename.ul [option]");
 			return;
 		}
-		else {
-			input = new ANTLRInputStream(new FileInputStream(args[0]));
-            if(args.length > 1){
+		else if (args.length > 1){
+            if(args[1].equals("-p"))
                 do_print = true;
-            }
-		}
+        }
+
+        input = new ANTLRInputStream(new FileInputStream(args[0]));
+        if(args.length > 1){
+            do_print = true;
+        }
 
 		// The name of the grammar here is "ulwActions",
 		// so ANTLR generates ulwActionsLexer and ulwActionsParser

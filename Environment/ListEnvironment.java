@@ -3,6 +3,7 @@ import AST.*;
 import Types.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ListEnvironment implements Environment<String, Object>{
     private ListNode<String, Object> front;
@@ -33,6 +34,7 @@ public class ListEnvironment implements Environment<String, Object>{
         front = prev;
         scope--;
     }
+
     public void debugPrintScope(){
         System.out.println("scope");
         ListNode<String,Object> temp = front;
@@ -56,9 +58,10 @@ public class ListEnvironment implements Environment<String, Object>{
         List<Object> returnList = new ArrayList<Object>();
         ListNode<String, Object> n = front;
         while(n != null) {
-            returnList.add(n);
+            returnList.add(n.value);
             n = n.next;
         }
+        Collections.reverse(returnList);
         return returnList;
     }
         

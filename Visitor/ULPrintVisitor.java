@@ -3,14 +3,14 @@ import Types.*;
 import AST.*;
 import java.io.*;
 
-public class PrintVisitor implements VoidVisitor{
+public class ULPrintVisitor implements VoidVisitor{
     int indentation = 0;
     PrintStream out;
 
-    public PrintVisitor(OutputStream os){
+    public ULPrintVisitor(OutputStream os){
         this.out = new PrintStream(os);
     }
-    public PrintVisitor(File f){
+    public ULPrintVisitor(File f){
         try{
             this.out = new PrintStream(f);
         }
