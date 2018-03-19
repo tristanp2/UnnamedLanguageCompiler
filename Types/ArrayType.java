@@ -2,7 +2,7 @@ package Types;
 import Visitor.*;
 
 public class ArrayType extends Type{
-    Type elementType;
+    public Type elementType;
     int size;
     public ArrayType(Type et, int s){
         typeEnum = TypeEnum.ARRAY;

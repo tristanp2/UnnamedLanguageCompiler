@@ -15,6 +15,6 @@ public class StringLiteral extends Expression{
         return v.visit(this);
     }
     public String toString() {
-        return val;
+        return "\"" + val + "\"";
     }
 }

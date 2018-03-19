@@ -15,6 +15,6 @@ public class CharacterLiteral extends Expression{
         return v.visit(this);
     }
     public String toString() {
-        return val.toString();
+        return "'" + val + "'";
     }
 }

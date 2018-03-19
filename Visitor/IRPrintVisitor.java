@@ -2,11 +2,12 @@ package Visitor;
 import IR.*;
 import Types.*;
 import AST.*;
+import Environment.*;
 import java.io.*;
 
 
 public class IRPrintVisitor implements BaseVisitor{
-    TempHandler tempHandler;
+    ListEnvironment funcEnv;
     IRProgram irp;
     IRFunction currentFunction;
     PrintStream out;
@@ -17,6 +18,7 @@ public class IRPrintVisitor implements BaseVisitor{
         out = new PrintStream(os);
         progName = pn;
         labelCount = 0;
+        funcEnv = new ListEnvironment();
     }
 
     public TempVariable visit(AddExpression ae) throws Exception{
@@ -36,10 +38,21 @@ public class IRPrintVisitor implements BaseVisitor{
         }
     }
     public TempVariable visit(ArrayAssignment aa) throws Exception{
+        TempVariable indexTemp = (TempVariable)aa.index.accept(this);
+        TempVariable srcOperand = (TempVariable)aa.expr.accept(this);
+        TempVariable arrayTemp = currentFunction.lookupTemp(aa.id.name);
+
+        currentFunction.addInstruction(new IRAssignmentToArray(arrayTemp, indexTemp, srcOperand));
         return null;
     }
     public TempVariable visit(ArrayReference ar) throws Exception{
-        return null;
+        TempVariable indexTemp = (TempVariable)ar.index.accept(this);
+        TempVariable arrayTemp = currentFunction.lookupTemp(ar.id.name);
+        TempVariable destTemp = currentFunction.addTemp(((ArrayType)arrayTemp.type).elementType);
+        
+        currentFunction.addInstruction(new IRAssignmentFromArray(destTemp, arrayTemp, indexTemp)); 
+
+        return destTemp;
     }
     public TempVariable visit(Block b) throws Exception{
         int size = b.size();
@@ -90,7 +103,7 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(ExpressionStatement es) throws Exception{
-        return null;
+        return (TempVariable)es.expr.accept(this);
     }
     public TempVariable visit(FloatLiteral fl) throws Exception{
         String litVal = fl.toString();
@@ -105,6 +118,14 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(FormalParameterList fpl) throws Exception{
+        int size = fpl.size();
+
+        for(int i=0; i<size; i++){
+            FormalParameter fp = fpl.elementAt(i);
+            currentFunction.addTemp(fp.id.name, fp.type.type);
+            currentFunction.addParam(fp.type.type);
+        }
+
         return null;
     }
     public TempVariable visit(FunctionBody fb) throws Exception{
@@ -117,17 +138,46 @@ public class IRPrintVisitor implements BaseVisitor{
         for(int i = 0; i < statSize; i++) {
             fb.statementAt(i).accept(this);
         }
+        if(currentFunction.returnType.equals(TypeEnum.VOID)){
+            currentFunction.addInstruction(new IRReturn());
+        }
         return null;
     }
     public TempVariable visit(FunctionCall fc) throws Exception{
-        return null;
+        Type fType = (Type)funcEnv.lookup(fc.id.name);
+        IRCall ic = new IRCall(fc.id.name);
+        TempVariable dest = null;
+        System.out.println("1");
+        if(fc.exprList != null){
+            ExpressionList el = fc.exprList;
+            int size = el.size();
+            for(int i=0; i<size; i++){
+                TempVariable temp = (TempVariable)el.elementAt(i).accept(this);
+                ic.addParam(temp);
+            }
+        }
+        
+        currentFunction.addInstruction(ic);
+        if(fType.equals(TypeEnum.VOID)){
+            return null;
+        }
+        else{
+            dest = currentFunction.addTemp(fType);
+            ic.setDest(dest);
+        }
+
+        return dest;
     }
     public TempVariable visit(FunctionDeclaration fd) throws Exception{
+        if(fd.paramList != null)
+            fd.paramList.accept(this);
         currentFunction.returnType = fd.type.type; //lol
         currentFunction.funcName = fd.id.name;
         return null;
     }
     public TempVariable visit(Function f) throws Exception{
+        //labels are function scope only???
+        labelCount = 0;
         currentFunction = new IRFunction();
         f.funcDec.accept(this);
         f.funcBody.accept(this);
@@ -213,18 +263,27 @@ public class IRPrintVisitor implements BaseVisitor{
 
     }
     public TempVariable visit(ParenExpression pe) throws Exception{
-        return null;
+        return (TempVariable)pe.expr.accept(this);
     }
     public TempVariable visit(PrintLnStatement pls) throws Exception{
+        TempVariable temp = (TempVariable)pls.expr.accept(this); 
+        currentFunction.addInstruction(new IRPrintLn(temp));
         return null;
     }
     public TempVariable visit(PrintStatement ps) throws Exception{
+        TempVariable temp = (TempVariable)ps.expr.accept(this); 
+        currentFunction.addInstruction(new IRPrintLn(temp));
         return null;
     }
     public TempVariable visit(Program p) throws Exception{
         int size = p.size();
         out.println(progName);
         irp = new IRProgram();
+        //pass to pickup the function decs first
+        for(int i=0; i<size; i++){
+            FunctionDeclaration fd = p.elementAt(i).funcDec;
+            funcEnv.add(fd.id.name, fd.type.type);
+        }
         for(int i=0; i<size; i++){
             p.elementAt(i).accept(this);
             irp.addFunction(currentFunction);
@@ -234,6 +293,14 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(ReturnStatement rs) throws Exception{
+        TempVariable temp = null;
+        if(rs.expr != null){
+            temp = (TempVariable)rs.expr.accept(this);
+            currentFunction.addInstruction(new IRReturn(temp));
+        }
+        else{
+            currentFunction.addInstruction(new IRReturn());
+        }
         return null;
     }
     public TempVariable visit(StringLiteral sl) throws Exception{
@@ -302,6 +369,7 @@ public class IRPrintVisitor implements BaseVisitor{
         currentFunction.addInstruction(new IRIfJump(condTemp, l2));
         ws.body.accept(this);
         currentFunction.addInstruction(new IRJump(l1));
+        currentFunction.addInstruction(l2);
 
         return null;
     }
