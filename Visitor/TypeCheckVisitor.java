@@ -347,7 +347,7 @@ public class TypeCheckVisitor implements BaseVisitor{
         Type t1 = (Type)e.expr1.accept(this);
         Type t2 = (Type)e.expr2.accept(this);
         
-        if(t1.equals(TypeEnum.VOID) || t1.equals(TypeEnum.FLOAT) ||
+        if(t1.equals(TypeEnum.INTEGER) || t1.equals(TypeEnum.FLOAT) ||
             t1.equals(TypeEnum.CHAR)){
             if(t1.equals(t2)){
                 return t1;

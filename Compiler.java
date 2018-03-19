@@ -69,11 +69,14 @@ public class Compiler {
 		ulwActionsParser parser = new ulwActionsParser(tokens);
 
 		try {
-            if(do_print)
-			    print(parser.program());
+            //Repeated calls to parser.program() was causing exception
+            //wat it do?
+            Program astRoot = parser.program();
+            if(do_print){
+			    print(astRoot);
             }
-            type_check(parser.program());
-        //        translate_to_IR(parser.program(), args[0]);
+            type_check(astRoot);
+            translate_to_IR(astRoot, args[0]);
 		}
 		catch (RecognitionException e )	{
 			// A lexical or parsing error occured.

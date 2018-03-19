@@ -11,4 +11,12 @@ public class IRProgram {
     public void addFunction(IRFunction f) {
         functionList.add(f);
     }
+
+    public String toString() {
+        String ret = "";
+        for(IRFunction i : functionList) {
+            ret += i;
+        }
+        return ret;
+    }
 }

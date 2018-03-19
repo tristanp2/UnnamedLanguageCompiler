@@ -16,7 +16,7 @@ public class VoidType extends Type{
         return "void";
     }
     public String toStringIR(){
-        return "";
+        return "V";
     }
     public boolean equals(TypeEnum te) {
         return te == typeEnum;

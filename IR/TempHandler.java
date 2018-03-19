@@ -12,7 +12,7 @@ public class TempHandler {
         tempEnvironment = new ListEnvironment();
         tempNum = 0;
     }
-    public String tempDeclarationsToString() {
+    public String toString() {
         List<Object> l = tempEnvironment.getList();
         String returnString = "";
         for(Object o : l) {
@@ -21,15 +21,21 @@ public class TempHandler {
         }
         return returnString;
     }
-    public String get(String key) {
+    public TempVariable get(String key) {
         TempVariable tv = (TempVariable)tempEnvironment.lookup(key);
 
-        if(tv == null)
-            return null;
-
-        return tv.toString();
+        return tv;
     }
-    public String add(String key, Type t) {
+    //for literals
+    public TempVariable add(Type t) {
+        TempVariable tv = new TempVariable(tempNum, t);
+        //should be fine since key is not valid id?
+        tempEnvironment.add("", tv);
+        tempNum++;
+        return tv;
+    }
+
+    public TempVariable add(String key, Type t) {
         TempVariable tv = (TempVariable)tempEnvironment.lookup(key);
 
         //maybe should throw error?
@@ -41,7 +47,7 @@ public class TempHandler {
         tempNum++;
         tempEnvironment.add(key, tv);
         
-        return tv.toString();
+        return tv;
     }
 }
 
