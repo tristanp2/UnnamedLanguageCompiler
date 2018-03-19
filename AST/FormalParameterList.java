@@ -20,8 +20,8 @@ public class FormalParameterList extends ASTNode{
         return paramList.size();
     }
 
-    public void accept(VoidVisitor v){
-        v.visit(this);
+    public Object accept(BaseVisitor v) throws Exception{
+        return v.visit(this);
     }
     public Type accept(TypeVisitor tv) throws SemanticException{
         return tv.visit(this);

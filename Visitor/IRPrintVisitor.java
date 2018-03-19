@@ -2,95 +2,154 @@ package Visitor;
 import IR.*;
 import Types.*;
 import AST.*;
+import java.io.*;
 
-class IRPrintVisitor {
-    TempFactory tempFactory;
+public class IRPrintVisitor implements BaseVisitor{
+    TempHandler tempHandler;
+    IRProgram irp;
+    IRFunction currentFunction;
+    PrintStream out;
+    String progName;
 
-    void visit(AddExpression ae){
+    public IRPrintVisitor(String pn, OutputStream os){
+        out = new PrintStream(os);
+        progName = pn;
+    }
 
+    public TempVariable visit(AddExpression ae) throws Exception{
+
+        return null;
     }
-    void visit(ArrayAssignment aa){
+    public TempVariable visit(ArrayAssignment aa) throws Exception{
+        return null;
     }
-    void visit(ArrayReference ar){
+    public TempVariable visit(ArrayReference ar) throws Exception{
+        return null;
     }
-    void visit(Block b){
+    public TempVariable visit(Block b) throws Exception{
+        return null;
     }
-    void visit(BooleanLiteral bl){
+    public TempVariable visit(BooleanLiteral bl) throws Exception{
+        return null;
     }
-    void visit(CharacterLiteral cl){
+    public TempVariable visit(CharacterLiteral cl) throws Exception{
+        return null;
     }
-    void visit(EmptyStatement es){
+    public TempVariable visit(EmptyStatement es) throws Exception{
+        return null;
     }
-    void visit(EqualityExpression ee){
+    public TempVariable visit(EqualityExpression ee) throws Exception{
+        return null;
     }
-    void visit(ExpressionList el){
+    public TempVariable visit(ExpressionList el) throws Exception{
+        return null;
     }
-    void visit(ExpressionStatement es){
+    public TempVariable visit(ExpressionStatement es) throws Exception{
+        return null;
     }
-    void visit(FloatLiteral fl){
+    public TempVariable visit(FloatLiteral fl) throws Exception{
+        return null;
     }
-    void visit(FormalParameter fp){
+    public TempVariable visit(FormalParameter fp) throws Exception{
+        return null;
     }
-    void visit(FormalParameterList fpl){
+    public TempVariable visit(FormalParameterList fpl) throws Exception{
+        return null;
     }
-    void visit(FunctionBody fb){
+    public TempVariable visit(FunctionBody fb) throws Exception{
+        return null;
     }
-    void visit(FunctionCall fc){
+    public TempVariable visit(FunctionCall fc) throws Exception{
+        return null;
     }
-    void visit(FunctionDeclaration fd){
+    public TempVariable visit(FunctionDeclaration fd) throws Exception{
+        return null;
     }
-    void visit(Function f){
+    public TempVariable visit(Function f) throws Exception{
+        return null;
     }
-    void visit(Identifier i){
+    public TempVariable visit(Identifier i) throws Exception{
+        return null;
     }
-    void visit(IdentifierValue iv){
+    public TempVariable visit(IdentifierValue iv) throws Exception{
+        return null;
     }
-    void visit(IfStatement is){
+    public TempVariable visit(IfStatement is) throws Exception{
+        return null;
     }
-    void visit(IntegerLiteral il){
+    public TempVariable visit(IntegerLiteral il) throws Exception{
+        return null;
     }
-    void visit(LessThanExpression lte){
+    public TempVariable visit(LessThanExpression lte) throws Exception{
+        return null;
     }
-    void visit(MultExpression me){
+    public TempVariable visit(MultExpression me) throws Exception{
+        return null;
     }
-    void visit(ParenExpression pe){
+    public TempVariable visit(ParenExpression pe) throws Exception{
+        return null;
     }
-    void visit(PrintLnStatement pls){
+    public TempVariable visit(PrintLnStatement pls) throws Exception{
+        return null;
     }
-    void visit(PrintStatement ps){
+    public TempVariable visit(PrintStatement ps) throws Exception{
+        return null;
     }
-    void visit(Program p){
+    public TempVariable visit(Program p) throws Exception{
+        int size = p.size();
+        out.println(progName);
+        for(int i=0; i<size; i++){
+            p.elementAt(i).accept(this);
+            return null;
     }
-    void visit(ReturnStatement rs){
+        return null;
     }
-    void visit(StringLiteral sl){
+    public TempVariable visit(ReturnStatement rs) throws Exception{
+        return null;
     }
-    void visit(SubtractExpression se){
+    public TempVariable visit(StringLiteral sl) throws Exception{
+        return null;
     }
-    void visit(TypeNode tn){
+    public TempVariable visit(SubtractExpression se) throws Exception{
+        return null;
     }
-    void visit(UnaryExpression ue){
+    public TempVariable visit(TypeNode tn) throws Exception{
+        return null;
     }
-    void visit(VariableAssignment va){
+    public TempVariable visit(UnaryExpression ue) throws Exception{
+        return null;
     }
-    void visit(VariableDeclaration vd){
+    public TempVariable visit(VariableAssignment va) throws Exception{
+        return null;
     }
-    void visit(WhileStatement ws){
+    public TempVariable visit(VariableDeclaration vd) throws Exception{
+        return null;
     }
-    void visit(Type t){
+    public TempVariable visit(WhileStatement ws) throws Exception{
+        return null;
     }
-    void visit(ArrayType at){
+    public TempVariable visit(Type t) throws Exception{
+        return null;
     }
-    void visit(BooleanType bt){
+    public TempVariable visit(ArrayType at) throws Exception{
+        return null;
     }
-    void visit(CharType ct){
+    public TempVariable visit(BooleanType bt) throws Exception{
+        return null;
     }
-    void visit(FloatType ft){
+    public TempVariable visit(CharType ct) throws Exception{
+        return null;
     }
-    void visit(IntegerType it){
+    public TempVariable visit(FloatType ft) throws Exception{
+        return null;
     }
-    void visit(StringType st){
+    public TempVariable visit(IntegerType it) throws Exception{
+        return null;
     }
-    void visit(VoidType vt){
+    public TempVariable visit(StringType st) throws Exception{
+        return null;
+    }
+    public TempVariable visit(VoidType vt) throws Exception{
+        return null;
     }
 }

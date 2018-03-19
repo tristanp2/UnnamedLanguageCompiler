@@ -5,8 +5,8 @@ public class CharType extends Type{
     public CharType() {
         typeEnum = TypeEnum.CHAR;
     }
-    public void accept(VoidVisitor v){
-        v.visit(this);
+    public Object accept(BaseVisitor v) throws Exception{
+        return v.visit(this);
     }
     public String toString(){
         return toStringUL();

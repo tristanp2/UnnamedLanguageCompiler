@@ -5,8 +5,8 @@ public class IntegerType extends Type{
     public IntegerType() {
         typeEnum = TypeEnum.INTEGER;
     }
-    public void accept(VoidVisitor v){
-        v.visit(this);
+    public Object accept(BaseVisitor v) throws Exception{
+        return v.visit(this);
     }
 
     public String toString(){

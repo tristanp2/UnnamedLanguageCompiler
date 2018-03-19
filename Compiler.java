@@ -13,7 +13,13 @@ import Visitor.*;
 public class Compiler {
     public static void print(Program p){
         ULPrintVisitor pv = new ULPrintVisitor(System.out);
-        p.accept(pv);
+        try{
+            p.accept(pv);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
     public static void type_check(Program p){
         TypeCheckVisitor tcv = new TypeCheckVisitor();
@@ -22,6 +28,20 @@ public class Compiler {
         }
         catch(SemanticException se){
             System.out.println(se);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+    public static void translate_to_IR(Program p, String progName) {
+        IRPrintVisitor pv = new IRPrintVisitor(progName, System.out);
+        try{
+            p.accept(pv);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            e.printStackTrace();
         }
     }
 	public static void main (String[] args) throws Exception {
@@ -51,9 +71,9 @@ public class Compiler {
 		try {
             if(do_print)
 			    print(parser.program());
-            else
-                type_check(parser.program());
-
+            }
+            type_check(parser.program());
+        //        translate_to_IR(parser.program(), args[0]);
 		}
 		catch (RecognitionException e )	{
 			// A lexical or parsing error occured.

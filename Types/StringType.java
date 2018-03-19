@@ -5,8 +5,8 @@ public class StringType extends Type{
     public StringType() {
         typeEnum = TypeEnum.STRING;
     }
-    public void accept(VoidVisitor v){
-        v.visit(this);
+    public Object accept(BaseVisitor v) throws Exception{
+        return v.visit(this);
     }
     public String toString(){
         return toStringUL();
