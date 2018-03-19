@@ -26,11 +26,11 @@ public class TempHandler {
 
         return tv;
     }
-    //for literals
+    //for intermediate values
     public TempVariable add(Type t) {
         TempVariable tv = new TempVariable(tempNum, t);
         //should be fine since key is not valid id?
-        tempEnvironment.add("", tv);
+        tempEnvironment.add("*" + Integer.toString(tempNum), tv);
         tempNum++;
         return tv;
     }
@@ -40,7 +40,7 @@ public class TempHandler {
 
         //maybe should throw error?
         if(tv != null) {
-            return tv.toString();
+            return tv;
         }
         
         tv = new TempVariable(tempNum, t);

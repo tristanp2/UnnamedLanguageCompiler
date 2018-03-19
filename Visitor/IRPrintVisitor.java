@@ -4,6 +4,7 @@ import Types.*;
 import AST.*;
 import java.io.*;
 
+
 public class IRPrintVisitor implements BaseVisitor{
     TempHandler tempHandler;
     IRProgram irp;
@@ -21,36 +22,17 @@ public class IRPrintVisitor implements BaseVisitor{
         TempVariable tempE1;
         TempVariable tempE2;
 
-        Type litCheck = getLiteralType(ae.e1);
+        tempE1 = (TempVariable)ae.expr1.accept(this);
+        if(ae.expr2 != null){
+            tempE2 = (TempVariable)ae.expr2.accept(this);
+            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
 
-        if(!litCheck == null){
-            tempE1 = currentFunction.addTemp(litCheck);
-
-            //this should assign to litVal
-            ae.e1.accept(this);
-
-            currentFunction.addInstruction(new IRAssignmentConstant(t, litVal));
+            currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "+", tempE2)); 
+            return destOperand;
         }
-        else{
-            tempE1 = ae.e1.accept(this);
+        else {
+            return tempE1;
         }
-        
-        litCheck = getLiteralType(ae.e2);
-        if(!litCheck == null){
-            tempE2 = currentFunction.addTemp(litCheck);
-
-            ae.e2.accept(this);
-
-            currentFunction.addInstruction(new IRAssignmentConstant(t, litVal));
-        }
-        else{
-            tempE2 = ae.e2.accept(this);
-        }
-
-        TempVariable destOperand = currentFunction.addTemp(tempE1.type);
-
-        currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "+", tempE2)); 
-        return destOperand;
     }
     public TempVariable visit(ArrayAssignment aa) throws Exception{
         return null;
@@ -62,18 +44,42 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(BooleanLiteral bl) throws Exception{
-        litVal = bl.toString();
-        return null;
+        String litVal = bl.toString();
+        TempVariable temp = currentFunction.lookupLiteral(litVal, new BooleanType());
+        if(temp == null){
+            temp = currentFunction.addLiteral(litVal, new BooleanType());
+            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
+        }
+        return temp;
     }
     public TempVariable visit(CharacterLiteral cl) throws Exception{
-        litVal = cl.toString();
-        return null;
+        String litVal = cl.toString();
+        TempVariable temp = currentFunction.lookupLiteral(litVal, new CharType());
+        if(temp == null){
+            temp = currentFunction.addLiteral(litVal, new CharType());
+            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
+        }
+        return temp;
     }
     public TempVariable visit(EmptyStatement es) throws Exception{
         return null;
     }
     public TempVariable visit(EqualityExpression ee) throws Exception{
-        return null;
+        TempVariable tempE1;
+        TempVariable tempE2;
+
+        tempE1 = (TempVariable)ee.expr1.accept(this);
+        if(ee.expr2 != null){
+            tempE2 = (TempVariable)ee.expr2.accept(this);
+            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+
+            currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "==", tempE2)); 
+            return destOperand;
+        }
+        else {
+            return tempE1;
+        }
+
     }
     public TempVariable visit(ExpressionList el) throws Exception{
         return null;
@@ -82,8 +88,13 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(FloatLiteral fl) throws Exception{
-        litVal = fl.toString();
-        return null;
+        String litVal = fl.toString();
+        TempVariable temp = currentFunction.lookupLiteral(litVal, new FloatType());
+        if(temp == null){
+            temp = currentFunction.addLiteral(litVal, new FloatType());
+            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
+        }
+        return temp;
     }
     public TempVariable visit(FormalParameter fp) throws Exception{
         return null;
@@ -112,8 +123,8 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(Function f) throws Exception{
-        literalCount = 0;
         currentFunction = new IRFunction();
+        out.println("func");
         f.funcDec.accept(this);
         f.funcBody.accept(this);
          
@@ -123,20 +134,57 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(IdentifierValue iv) throws Exception{
-        return null;
+        TempVariable temp = currentFunction.lookupTemp(iv.id.name);
+        
+        if(temp == null){
+            throw new Exception("iv undeclared??");
+        }
+        return temp;
     }
     public TempVariable visit(IfStatement is) throws Exception{
         return null;
     }
     public TempVariable visit(IntegerLiteral il) throws Exception{
-        litVal = il.toString();
-        return null;
+        String litVal = il.toString();
+        TempVariable temp = currentFunction.lookupLiteral(litVal, new IntegerType());
+        if(temp == null){
+            temp = currentFunction.addLiteral(litVal, new IntegerType());
+            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
+        }
+        return temp;
     }
     public TempVariable visit(LessThanExpression lte) throws Exception{
-        return null;
+        TempVariable tempE1;
+        TempVariable tempE2;
+
+        tempE1 = (TempVariable)lte.expr1.accept(this);
+        if(lte.expr2 != null){
+            tempE2 = (TempVariable)lte.expr2.accept(this);
+            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+
+            currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "<", tempE2)); 
+            return destOperand;
+        }
+        else{
+            return tempE1;
+        }
     }
     public TempVariable visit(MultExpression me) throws Exception{
-        return null;
+        TempVariable tempE1;
+        TempVariable tempE2;
+
+        tempE1 = (TempVariable)me.expr1.accept(this);
+        if(me.expr2 != null){
+            tempE2 = (TempVariable)me.expr2.accept(this);
+            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
+
+            currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "*", tempE2)); 
+            return destOperand;
+        }
+        else {
+            return tempE1;
+        }
+
     }
     public TempVariable visit(ParenExpression pe) throws Exception{
         return null;
@@ -163,22 +211,56 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(StringLiteral sl) throws Exception{
-        litVal = sl.toString();
-        return null;
+        String litVal = sl.toString();
+        TempVariable temp = currentFunction.lookupLiteral(litVal, new StringType());
+        if(temp == null){
+            temp = currentFunction.addLiteral(litVal, new StringType());
+            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
+        }
+        return temp;
     }
     public TempVariable visit(SubtractExpression se) throws Exception{
-        return null;
+        TempVariable tempE1;
+        TempVariable tempE2;
+
+        tempE1 = (TempVariable)se.expr1.accept(this);
+        
+        if(se.expr2 != null){
+            tempE2 = (TempVariable)se.expr2.accept(this);
+            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
+
+            currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "-", tempE2)); 
+            return destOperand;
+        }
+        else {
+            return tempE1;
+        }
+
     }
     public TempVariable visit(TypeNode tn) throws Exception{
         return null;
     }
     public TempVariable visit(UnaryExpression ue) throws Exception{
-        return null;
+        //TODO
+        return (TempVariable)ue.expr.accept(this);
     }
     public TempVariable visit(VariableAssignment va) throws Exception{
+        TempVariable destOperand = currentFunction.lookupTemp(va.id.name);
+        TempVariable srcOperand;
+        
+        if(destOperand == null){
+            throw new Exception("variable wasn't declared???");
+        }
+
+        srcOperand = (TempVariable)va.expr.accept(this);
+
+        currentFunction.addInstruction(new IRAssignmentOperand(destOperand, srcOperand));
+        
         return null;
     }
     public TempVariable visit(VariableDeclaration vd) throws Exception{
+        TempVariable tempDecl = currentFunction.addTemp(vd.id.name, vd.type.type);
+
         return null;
     }
     public TempVariable visit(WhileStatement ws) throws Exception{
@@ -207,26 +289,5 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(VoidType vt) throws Exception{
         return null;
-    }
-
-    private Type getLiteralType(ASTNode n) {
-        if(n instanceof BooleanLiteral){
-            return new BooleanType();
-        }
-        else if(n instanceof CharLiteral){
-            return new CharType();
-        }
-        else if(n instanceof FloatLiteral){
-            return new FloatType();
-        }
-        else if(n instanceof IntegerLiteral){
-            return new IntegerType();
-        }
-        else if(n instanceof StringLiteral){
-            return new StringType();
-        }
-        else{
-            return null;
-        }
     }
 }
