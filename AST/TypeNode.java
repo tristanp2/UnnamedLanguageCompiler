@@ -11,14 +11,12 @@ public class TypeNode extends ASTNode{
         line_number = ln;
         offset = os;
     }
-    public Type getType(){
+
+    public Type getType() {
         return type;
     }
 
     public Object accept(BaseVisitor v) throws Exception{
         return v.visit(this);
-    }
-    public Type accept(TypeVisitor tv) throws SemanticException{
-        return tv.visit(this);
     }
 }
