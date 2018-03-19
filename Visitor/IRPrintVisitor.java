@@ -11,11 +11,12 @@ public class IRPrintVisitor implements BaseVisitor{
     IRFunction currentFunction;
     PrintStream out;
     String progName;
-    String litVal;
+    int labelCount;
 
     public IRPrintVisitor(String pn, OutputStream os){
         out = new PrintStream(os);
         progName = pn;
+        labelCount = 0;
     }
 
     public TempVariable visit(AddExpression ae) throws Exception{
@@ -41,10 +42,14 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(Block b) throws Exception{
+        int size = b.size();
+        for(int i=0; i<size; i++){
+            b.elementAt(i).accept(this);
+        }
         return null;
     }
     public TempVariable visit(BooleanLiteral bl) throws Exception{
-        String litVal = bl.toString();
+        String litVal = bl.toString().toUpperCase();
         TempVariable temp = currentFunction.lookupLiteral(litVal, new BooleanType());
         if(temp == null){
             temp = currentFunction.addLiteral(litVal, new BooleanType());
@@ -124,7 +129,6 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(Function f) throws Exception{
         currentFunction = new IRFunction();
-        out.println("func");
         f.funcDec.accept(this);
         f.funcBody.accept(this);
          
@@ -142,6 +146,28 @@ public class IRPrintVisitor implements BaseVisitor{
         return temp;
     }
     public TempVariable visit(IfStatement is) throws Exception{
+        IRLabel l1 = new IRLabel(labelCount++);
+
+        TempVariable condTemp = (TempVariable)is.condition.accept(this);
+
+        //could just invert condTemp, but that would cause problems
+        //  if condition was just a boolean variable, and detecting that is inconvenient
+        TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
+        currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
+        currentFunction.addInstruction(new IRIfJump(condTemp, l1));
+        is.ifBlock.accept(this);
+
+        if(is.hasElse()){
+            IRLabel l2 = new IRLabel(labelCount++);
+            currentFunction.addInstruction(new IRJump(l2));
+            currentFunction.addInstruction(l1);
+            is.elseBlock.accept(this);
+            currentFunction.addInstruction(l2);
+        }
+        else{
+            currentFunction.addInstruction(l1);
+        }
+
         return null;
     }
     public TempVariable visit(IntegerLiteral il) throws Exception{
