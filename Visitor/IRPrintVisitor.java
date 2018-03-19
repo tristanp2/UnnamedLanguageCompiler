@@ -290,6 +290,19 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(WhileStatement ws) throws Exception{
+        IRLabel l1 = new IRLabel(labelCount++);
+        IRLabel l2 = new IRLabel(labelCount++);
+
+        currentFunction.addInstruction(l1);
+        TempVariable condTemp = (TempVariable)ws.condition.accept(this);
+        //could just invert condTemp, but that would cause problems
+        //  if condition was just a boolean variable, and detecting that is inconvenient
+        TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
+        currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
+        currentFunction.addInstruction(new IRIfJump(condTemp, l2));
+        ws.body.accept(this);
+        currentFunction.addInstruction(new IRJump(l1));
+
         return null;
     }
     public TempVariable visit(Type t) throws Exception{
