@@ -9,6 +9,8 @@ import org.antlr.runtime.*;
 import java.io.*;
 import AST.*;
 import Visitor.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Compiler {
     public static void print(Program p){
@@ -21,28 +23,41 @@ public class Compiler {
             e.printStackTrace();
         }
     }
-    public static void type_check(Program p){
+    public static boolean type_check(Program p){
         TypeCheckVisitor tcv = new TypeCheckVisitor();
         try{
             p.accept(tcv); 
+            return true;
         }
         catch(SemanticException se){
             System.out.println(se);
+            return false;
         }
         catch(Exception e){
             System.out.println(e);
             e.printStackTrace();
         }
+        return false;
     }
-    public static void translate_to_IR(Program p, String progName) {
-        IRPrintVisitor pv = new IRPrintVisitor(progName, System.out);
+    public static void translate_to_IR(Program p, ArrayList<String> inputPath) {
+        inputPath.remove(inputPath.size() - 1);
+        String progName = inputPath.get(inputPath.size()-1);
+        String progPath = String.join("/", inputPath) + ".ir";
         try{
+            FileOutputStream fos = new FileOutputStream(progPath);
+            System.out.println("outputting IR to " + progPath);
+            IRPrintVisitor pv = new IRPrintVisitor(progName, fos);
             p.accept(pv);
         }
         catch(Exception e){
             System.out.println(e);
             e.printStackTrace();
         }
+    }
+    public static String make_prog_name(String filename) {
+        String[] split_f = filename.split("[./]");
+        String ret = split_f[split_f.length - 2];
+        return ret;
     }
 	public static void main (String[] args) throws Exception {
 		ANTLRInputStream input;
@@ -61,6 +76,12 @@ public class Compiler {
         if(args.length > 1){
             do_print = true;
         }
+        ArrayList<String> inputFileSplit = new ArrayList<String>(Arrays.asList(args[0].split("[./]")));
+        String extension = inputFileSplit.get(inputFileSplit.size() - 1);
+        if(!extension.equals("ul")){
+            System.out.println(extension + " is not a valid extension. \".ul\" extension required");
+            return;
+        }
 
 		// The name of the grammar here is "ulwActions",
 		// so ANTLR generates ulwActionsLexer and ulwActionsParser
@@ -75,8 +96,8 @@ public class Compiler {
             if(do_print){
 			    print(astRoot);
             }
-            type_check(astRoot);
-            translate_to_IR(astRoot, args[0]);
+            if(type_check(astRoot))
+                translate_to_IR(astRoot, inputFileSplit);
 		}
 		catch (RecognitionException e )	{
 			// A lexical or parsing error occured.

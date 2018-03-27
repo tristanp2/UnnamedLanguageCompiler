@@ -276,7 +276,7 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(Program p) throws Exception{
         int size = p.size();
-        out.println(progName);
+        out.println("PROG " + progName);
         irp = new IRProgram();
         //pass to pickup the function decs first
         for(int i=0; i<size; i++){

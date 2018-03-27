@@ -329,10 +329,12 @@ public class TypeCheckVisitor implements BaseVisitor{
     }
 	public Type visit (ReturnStatement s) throws Exception {
         FunctionInfo fi = (FunctionInfo)functionEnvironment.lookup(current_function_name);
-        Type et = (Type)s.expr.accept(this);
-        if(!et.equals(fi.t)){
-            throw new SemanticException("Returned type does not match function type\n\tExpected: " + fi.t
-                                        + "\tGot: " + et, s.line_number, s.offset);
+        if(s.expr != null){
+            Type et = (Type)s.expr.accept(this);
+            if(!et.equals(fi.t)){
+                throw new SemanticException("Returned type does not match function type\n\tExpected: " + fi.t
+                                            + "\tGot: " + et, s.line_number, s.offset);
+            }
         }
         return null;
     }
