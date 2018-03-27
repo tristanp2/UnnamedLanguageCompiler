@@ -147,7 +147,6 @@ public class IRPrintVisitor implements BaseVisitor{
         Type fType = (Type)funcEnv.lookup(fc.id.name);
         IRCall ic = new IRCall(fc.id.name);
         TempVariable dest = null;
-        System.out.println("1");
         if(fc.exprList != null){
             ExpressionList el = fc.exprList;
             int size = el.size();
