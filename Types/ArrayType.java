@@ -3,7 +3,7 @@ import Visitor.*;
 
 public class ArrayType extends Type{
     public Type elementType;
-    int size;
+    public int size;
     public ArrayType(Type et, int s){
         typeEnum = TypeEnum.ARRAY;
         elementType = et;
@@ -26,7 +26,7 @@ public class ArrayType extends Type{
         return elementType;
     }
     public boolean equals (TypeEnum te) {
-        return false;
+        return te == TypeEnum.ARRAY;
     }
     public boolean equals (Type t){
         if(t.typeEnum == typeEnum) {

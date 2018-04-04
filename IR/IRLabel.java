@@ -10,6 +10,6 @@ public class IRLabel extends IRInstruction{
         return "L" + labelNum;
     }
     public String toString() {
-        return labelName() + ";"; 
+        return labelName() + ":;"; 
     }
 }

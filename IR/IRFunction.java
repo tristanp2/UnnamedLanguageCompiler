@@ -22,18 +22,21 @@ public class IRFunction {
     }
     public TempVariable addLiteral(String value, Type t) {
         String litName = literalName(value,t);
-        return tempH.add(litName, t);
+        return tempH.addIntermediate(litName, t);
     }
     public TempVariable lookupLiteral(String value, Type t) {
         String litName = literalName(value,t);
         return tempH.get(litName);
     }
-    public TempVariable addTemp(String name, Type t) {
-        return tempH.add(name, t);
+    public TempVariable addParameter(String name, Type t) {
+        return tempH.addParameter(name, t);
+    }
+    public TempVariable addLocal(String name, Type t) {
+        return tempH.addLocal(name, t);
     }
     //for intermed values
-    public TempVariable addTemp(Type t) {
-        return tempH.add(t);
+    public TempVariable addIntermediate(Type t) {
+        return tempH.addIntermediate(t);
     }
     public TempVariable lookupTemp(String name) {
         return tempH.get(name);

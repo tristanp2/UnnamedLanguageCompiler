@@ -40,7 +40,6 @@ public class Compiler {
         return false;
     }
     public static void translate_to_IR(Program p, ArrayList<String> inputPath) {
-        inputPath.remove(inputPath.size() - 1);
         String progName = inputPath.get(inputPath.size()-1);
         String progPath = String.join("/", inputPath) + ".ir";
         try{
@@ -76,8 +75,10 @@ public class Compiler {
         if(args.length > 1){
             do_print = true;
         }
-        ArrayList<String> inputFileSplit = new ArrayList<String>(Arrays.asList(args[0].split("[./]")));
-        String extension = inputFileSplit.get(inputFileSplit.size() - 1);
+        ArrayList<String> inputFileSplit = new ArrayList<String>(Arrays.asList(args[0].split("[/]")));
+        String[] temp = inputFileSplit.get(inputFileSplit.size() - 1).split("[.]");
+        String extension = temp[1];
+        inputFileSplit.set(inputFileSplit.size() - 1, temp[0]);
         if(!extension.equals("ul")){
             System.out.println(extension + " is not a valid extension. \".ul\" extension required");
             return;

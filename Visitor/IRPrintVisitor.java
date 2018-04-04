@@ -28,7 +28,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)ae.expr1.accept(this);
         if(ae.expr2 != null){
             tempE2 = (TempVariable)ae.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
+            TempVariable destOperand = currentFunction.addIntermediate(tempE1.type);
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "+", tempE2)); 
             return destOperand;
@@ -48,7 +48,7 @@ public class IRPrintVisitor implements BaseVisitor{
     public TempVariable visit(ArrayReference ar) throws Exception{
         TempVariable indexTemp = (TempVariable)ar.index.accept(this);
         TempVariable arrayTemp = currentFunction.lookupTemp(ar.id.name);
-        TempVariable destTemp = currentFunction.addTemp(((ArrayType)arrayTemp.type).elementType);
+        TempVariable destTemp = currentFunction.addIntermediate(((ArrayType)arrayTemp.type).elementType);
         
         currentFunction.addInstruction(new IRAssignmentFromArray(destTemp, arrayTemp, indexTemp)); 
 
@@ -89,7 +89,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)ee.expr1.accept(this);
         if(ee.expr2 != null){
             tempE2 = (TempVariable)ee.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+            TempVariable destOperand = currentFunction.addIntermediate(new BooleanType());
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "==", tempE2)); 
             return destOperand;
@@ -122,7 +122,7 @@ public class IRPrintVisitor implements BaseVisitor{
 
         for(int i=0; i<size; i++){
             FormalParameter fp = fpl.elementAt(i);
-            currentFunction.addTemp(fp.id.name, fp.type.type);
+            currentFunction.addParameter(fp.id.name, fp.type.type);
             currentFunction.addParam(fp.type.type);
         }
 
@@ -161,7 +161,7 @@ public class IRPrintVisitor implements BaseVisitor{
             return null;
         }
         else{
-            dest = currentFunction.addTemp(fType);
+            dest = currentFunction.addIntermediate(fType);
             ic.setDest(dest);
         }
 
@@ -201,9 +201,9 @@ public class IRPrintVisitor implements BaseVisitor{
 
         //could just invert condTemp, but that would cause problems
         //  if condition was just a boolean variable, and detecting that is inconvenient
-        TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
+        TempVariable invCondTemp = currentFunction.addIntermediate(new BooleanType());
         currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
-        currentFunction.addInstruction(new IRIfJump(condTemp, l1));
+        currentFunction.addInstruction(new IRIfJump(invCondTemp, l1));
         is.ifBlock.accept(this);
 
         if(is.hasElse()){
@@ -235,7 +235,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)lte.expr1.accept(this);
         if(lte.expr2 != null){
             tempE2 = (TempVariable)lte.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+            TempVariable destOperand = currentFunction.addIntermediate(new BooleanType());
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "<", tempE2)); 
             return destOperand;
@@ -251,7 +251,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)me.expr1.accept(this);
         if(me.expr2 != null){
             tempE2 = (TempVariable)me.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
+            TempVariable destOperand = currentFunction.addIntermediate(tempE1.type);
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "*", tempE2)); 
             return destOperand;
@@ -271,7 +271,7 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(PrintStatement ps) throws Exception{
         TempVariable temp = (TempVariable)ps.expr.accept(this); 
-        currentFunction.addInstruction(new IRPrintLn(temp));
+        currentFunction.addInstruction(new IRPrint(temp));
         return null;
     }
     public TempVariable visit(Program p) throws Exception{
@@ -319,7 +319,7 @@ public class IRPrintVisitor implements BaseVisitor{
         
         if(se.expr2 != null){
             tempE2 = (TempVariable)se.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp(tempE1.type);
+            TempVariable destOperand = currentFunction.addIntermediate(tempE1.type);
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "-", tempE2)); 
             return destOperand;
@@ -351,7 +351,11 @@ public class IRPrintVisitor implements BaseVisitor{
         return null;
     }
     public TempVariable visit(VariableDeclaration vd) throws Exception{
-        TempVariable tempDecl = currentFunction.addTemp(vd.id.name, vd.type.type);
+        TempVariable tempDecl = currentFunction.addLocal(vd.id.name, vd.type.type);
+
+        if(vd.type.type.equals(TypeEnum.ARRAY)){
+            currentFunction.addInstruction(new IRAssignmentArrayInit(tempDecl, (ArrayType)vd.type.type));
+        }
 
         return null;
     }
@@ -363,9 +367,9 @@ public class IRPrintVisitor implements BaseVisitor{
         TempVariable condTemp = (TempVariable)ws.condition.accept(this);
         //could just invert condTemp, but that would cause problems
         //  if condition was just a boolean variable, and detecting that is inconvenient
-        TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
+        TempVariable invCondTemp = currentFunction.addIntermediate(new BooleanType());
         currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
-        currentFunction.addInstruction(new IRIfJump(condTemp, l2));
+        currentFunction.addInstruction(new IRIfJump(invCondTemp, l2));
         ws.body.accept(this);
         currentFunction.addInstruction(new IRJump(l1));
         currentFunction.addInstruction(l2);
