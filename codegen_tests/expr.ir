@@ -1,0 +1,28 @@
+PROG expr
+FUNC main ()V
+{
+TEMP 0:I [L("x")];
+TEMP 1:I [L("y")];
+TEMP 2:I [L("z")];
+TEMP 3:I;
+TEMP 4:I;
+TEMP 5:I;
+TEMP 6:I;
+TEMP 7:I;
+TEMP 8:I;
+TEMP 9:I;
+T3 := 1;
+T0 := T3;
+T4 := 2;
+T1 := T4;
+T5 := 3;
+T2 := T5;
+T6 := T1 I+ T3;
+T7 := T0 I* T6;
+T8 := 7;
+T9 := T7 I+ T8;
+T2 := T9;
+PRINTLNI T2;
+RETURN;
+}
+

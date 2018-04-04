@@ -1,0 +1,22 @@
+PROG ar
+FUNC main ()V
+{
+TEMP 0:AI [L("x")];
+TEMP 1:I [L("y")];
+TEMP 2:I;
+TEMP 3:I;
+TEMP 4:I;
+TEMP 5:I;
+TEMP 6:I;
+T0 := NEWARRAY I 3;
+T2 := 0;
+T3 := 7;
+T0[T2] := T3;
+T4 := 1;
+T1 := T4;
+T5 := T1 I+ T4;
+T6 := 2;
+T0[T5] := T6;
+RETURN;
+}
+
