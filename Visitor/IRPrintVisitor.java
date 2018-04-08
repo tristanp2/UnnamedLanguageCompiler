@@ -63,20 +63,14 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(BooleanLiteral bl) throws Exception{
         String litVal = bl.toString().toUpperCase();
-        TempVariable temp = currentFunction.lookupLiteral(litVal, new BooleanType());
-        if(temp == null){
-            temp = currentFunction.addLiteral(litVal, new BooleanType());
-            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
-        }
+        TempVariable temp = currentFunction.addIntermediate(new BooleanType());
+        currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
         return temp;
     }
     public TempVariable visit(CharacterLiteral cl) throws Exception{
         String litVal = cl.toString();
-        TempVariable temp = currentFunction.lookupLiteral(litVal, new CharType());
-        if(temp == null){
-            temp = currentFunction.addLiteral(litVal, new CharType());
-            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
-        }
+        TempVariable temp = currentFunction.addIntermediate(new CharType());
+        currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
         return temp;
     }
     public TempVariable visit(EmptyStatement es) throws Exception{
@@ -107,11 +101,8 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(FloatLiteral fl) throws Exception{
         String litVal = fl.toString();
-        TempVariable temp = currentFunction.lookupLiteral(litVal, new FloatType());
-        if(temp == null){
-            temp = currentFunction.addLiteral(litVal, new FloatType());
-            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
-        }
+        TempVariable temp = currentFunction.addIntermediate(new FloatType());
+        currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
         return temp;
     }
     public TempVariable visit(FormalParameter fp) throws Exception{
@@ -221,11 +212,8 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(IntegerLiteral il) throws Exception{
         String litVal = il.toString();
-        TempVariable temp = currentFunction.lookupLiteral(litVal, new IntegerType());
-        if(temp == null){
-            temp = currentFunction.addLiteral(litVal, new IntegerType());
-            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
-        }
+        TempVariable temp = currentFunction.addIntermediate(new IntegerType());
+        currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
         return temp;
     }
     public TempVariable visit(LessThanExpression lte) throws Exception{
@@ -304,11 +292,8 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(StringLiteral sl) throws Exception{
         String litVal = sl.toString();
-        TempVariable temp = currentFunction.lookupLiteral(litVal, new StringType());
-        if(temp == null){
-            temp = currentFunction.addLiteral(litVal, new StringType());
-            currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
-        }
+        TempVariable temp = currentFunction.addIntermediate(new StringType());
+        currentFunction.addInstruction(new IRAssignmentConstant(temp, litVal));
         return temp;
     }
     public TempVariable visit(SubtractExpression se) throws Exception{

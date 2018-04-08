@@ -20,14 +20,6 @@ public class IRFunction {
     public void addInstruction(IRInstruction i) {
         instructionList.add(i);
     }
-    public TempVariable addLiteral(String value, Type t) {
-        String litName = literalName(value,t);
-        return tempH.addIntermediate(litName, t);
-    }
-    public TempVariable lookupLiteral(String value, Type t) {
-        String litName = literalName(value,t);
-        return tempH.get(litName);
-    }
     public TempVariable addParameter(String name, Type t) {
         return tempH.addParameter(name, t);
     }
@@ -41,12 +33,6 @@ public class IRFunction {
     public TempVariable lookupTemp(String name) {
         return tempH.get(name);
     }
-    //key for literal values
-    //not a valid id, so shouldn't conflict
-    private String literalName(String value, Type t){
-        return "*" + t + value;
-    }
-
         
     public String toString() {
         String returnString = String.format("FUNC %s (%s)%s\n{\n", funcName, params, returnType.toStringIR());
