@@ -1,10 +1,6 @@
 void main ()
 {
-	int[3] x;
-	int y;
-
-	x[0] = 7;
-	y = 1;
-	x[y+1] = 2;
-
+	string[3] x;
+    x[0] = "hello";
+    println x[0];
 }

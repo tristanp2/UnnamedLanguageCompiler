@@ -12,4 +12,7 @@ public class IRLabel extends IRInstruction{
     public String toString() {
         return labelName() + ":;"; 
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

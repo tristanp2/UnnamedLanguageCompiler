@@ -37,4 +37,7 @@ public class IRCall extends IRInstruction{
             return ret;
         }
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

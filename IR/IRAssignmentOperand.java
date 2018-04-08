@@ -9,4 +9,7 @@ public class IRAssignmentOperand extends IRAssignment {
     public String toString() {
         return String.format("%s := %s;",destOperand, srcOperand);
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

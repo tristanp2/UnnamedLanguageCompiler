@@ -18,4 +18,7 @@ public class IRReturn extends IRInstruction{
             return ret + ";";
         }
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

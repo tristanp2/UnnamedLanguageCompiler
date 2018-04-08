@@ -12,4 +12,7 @@ public class IRIfJump extends IRInstruction {
     public String toString() {
         return String.format("IF %s GOTO %s;", operand, dest.labelName());
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

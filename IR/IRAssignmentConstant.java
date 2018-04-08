@@ -11,6 +11,9 @@ public class IRAssignmentConstant extends IRAssignment {
     public String toString() {
         return String.format("%s := %s;", destOperand, constant);
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 
 }
 

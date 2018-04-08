@@ -14,4 +14,7 @@ public class IRAssignmentUnaryOp extends IRAssignment {
     public String toString() {
         return String.format("%s := %s %s;", destOperand, srcOperand.type.toStringIR() + operator, srcOperand);
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

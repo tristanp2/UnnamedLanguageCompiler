@@ -12,4 +12,7 @@ public class IRAssignmentToArray extends IRAssignment {
     public String toString() {
         return String.format("%s[%s] := %s;",destOperand, destIndex, srcOperand);
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

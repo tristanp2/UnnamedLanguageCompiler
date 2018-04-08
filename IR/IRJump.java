@@ -9,4 +9,7 @@ public class IRJump extends IRInstruction {
     public String toString() {
         return String.format("GOTO %s;", dest.labelName());
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }

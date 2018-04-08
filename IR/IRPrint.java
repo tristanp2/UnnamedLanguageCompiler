@@ -9,4 +9,7 @@ public class IRPrint extends IRInstruction {
     public String toString(){
         return String.format("PRINT%s %s;",temp.type.toStringIR(), temp);
     }
+    public String toStringAssembly() {
+        return "";   
+    }
 }
