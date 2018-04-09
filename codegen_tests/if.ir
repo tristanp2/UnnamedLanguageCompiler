@@ -5,12 +5,15 @@ TEMP 0:I [P("x")];
 TEMP 1:I [P("y")];
 TEMP 2:Z;
 TEMP 3:Z;
+TEMP 4:U;
 T2 := T0 I< T1;
 T3 := Z! T2;
 IF T3 GOTO L0;
 PRINTI T0;
+T4 := " is less than ";
+PRINTU T4;
 L0:;
-PRINTI T1;
+PRINTLNI T1;
 RETURN;
 }
 FUNC main ()V

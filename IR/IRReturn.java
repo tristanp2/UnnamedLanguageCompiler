@@ -1,18 +1,20 @@
 package IR;
 
 public class IRReturn extends IRInstruction{
-    TempVariable temp;
+    public TempVariable operand;
 
     public IRReturn(){
-        temp = null;
+        operand = null;
+        instructionType = IRInstructionType.RETURN;
     }
     public IRReturn(TempVariable t){
-        temp = t;
+        operand = t;
+        instructionType = IRInstructionType.RETURN;
     }
     public String toString(){
         String ret = "RETURN";
-        if(temp != null){
-            return ret + " " + temp + ";";
+        if(operand != null){
+            return ret + " " + operand + ";";
         }
         else{
             return ret + ";";

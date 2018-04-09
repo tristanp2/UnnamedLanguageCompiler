@@ -3,18 +3,19 @@ import IR.*;
 import Types.*;
 import AST.*;
 import Environment.*;
-import java.io.*;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 
-public class IRPrintVisitor implements BaseVisitor{
+public class IRVisitor implements BaseVisitor{
     ListEnvironment funcEnv;
-    IRProgram irp;
+    public IRProgram irp;
     IRFunction currentFunction;
     PrintStream out;
     String progName;
     int labelCount;
 
-    public IRPrintVisitor(String pn, OutputStream os){
+    public IRVisitor(String pn, OutputStream os){
         out = new PrintStream(os);
         progName = pn;
         labelCount = 0;
@@ -167,7 +168,7 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(Function f) throws Exception{
         //labels are function scope only???
-        labelCount = 0;
+        //labelCount = 0;
         currentFunction = new IRFunction();
         f.funcDec.accept(this);
         f.funcBody.accept(this);
@@ -264,8 +265,7 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(Program p) throws Exception{
         int size = p.size();
-        out.println("PROG " + progName);
-        irp = new IRProgram();
+        irp = new IRProgram(progName);
         //pass to pickup the function decs first
         for(int i=0; i<size; i++){
             FunctionDeclaration fd = p.elementAt(i).funcDec;
@@ -275,6 +275,7 @@ public class IRPrintVisitor implements BaseVisitor{
             p.elementAt(i).accept(this);
             irp.addFunction(currentFunction);
         }
+
         out.println(irp);
 
         return null;

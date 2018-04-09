@@ -12,9 +12,11 @@ FILEPATH=${FILEPATH:1}
 echo "|"
 echo "------------"
 echo "File: $FILE"
+IFS="." read -ra NAMESPLIT <<< "${PATHSPLIT[-1]}"
+OUTNAME=${NAMESPLIT[0]}".j"
 java -classpath $CLASSPATH Compiler $FILE
-./ir_to_class.sh $(printf "%s/%s.ir" "$FILEPATH" "$FILENAME")  
 echo "Running generated code"
+java jasmin.Main $FILEPATH"/"$OUTNAME
 java $FILENAME
 rm $FILENAME".class"
 echo ""

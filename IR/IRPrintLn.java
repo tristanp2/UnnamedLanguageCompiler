@@ -1,13 +1,14 @@
 package IR;
 
 public class IRPrintLn extends IRInstruction {
-    TempVariable temp;
+    public TempVariable operand;
 
     public IRPrintLn(TempVariable t){
-        temp = t;
+        operand = t;
+        instructionType = IRInstructionType.PRINTLN;
     }
     public String toString(){
-        return String.format("PRINTLN%s %s;",temp.type.toStringIR(), temp);
+        return String.format("PRINTLN%s %s;",operand.type.toStringIR(), operand);
     }
     public String toStringAssembly() {
         return "";   

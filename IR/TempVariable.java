@@ -1,6 +1,7 @@
 package IR;
 import Types.Type;
-
+import Types.TypeEnum;
+import Types.ArrayType;
 
 public class TempVariable {
     public Integer num;
@@ -32,5 +33,30 @@ public class TempVariable {
         }
 
         return declaration + annot;
+    }
+    public String toStringAssembly() {
+        String typeString;
+        if(type.equals(TypeEnum.STRING)){
+            typeString = "Ljava/lang/String;";
+        }
+        else if(type.equals(TypeEnum.ARRAY)){
+            ArrayType at = (ArrayType)type;
+            typeString = "[";
+            if(at.elementType.equals(TypeEnum.STRING)){
+                typeString += "Ljava/lang/String;";
+            }
+            else{
+                typeString += at.elementType.toStringIR();
+            }
+        }
+        else {
+            typeString = type.toStringIR();
+        }
+        String outName;
+        if(name == null)
+            outName = "T" + num;
+        else
+            outName = name;
+        return String.format(".var %d is %s %s", num, outName, typeString);
     }
 }

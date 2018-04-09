@@ -5,6 +5,7 @@ public class IRLabel extends IRInstruction{
 
     public IRLabel(int ln) {
         labelNum = ln;
+        instructionType = IRInstructionType.LABEL;
     }
     public String labelName() {
         return "L" + labelNum;

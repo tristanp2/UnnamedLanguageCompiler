@@ -1,21 +1,24 @@
 package IR;
 import Types.Type;
+import Types.TypeEnum;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IRFunction {
     public String funcName;
     public Type returnType;
+    private final String jlString = "Ljava/lang/String;";
     TempHandler tempH;
     ArrayList<IRInstruction> instructionList;
-    String params;
+    ArrayList<Type> params;
 
     public IRFunction() {
-        params = "";
+        params = new ArrayList<Type>();
         instructionList = new ArrayList<IRInstruction>();
         tempH = new TempHandler();
     }
     public void addParam(Type t) {
-        params += t.toStringIR();
+        params.add(t);
     }
     public void addInstruction(IRInstruction i) {
         instructionList.add(i);
@@ -33,9 +36,12 @@ public class IRFunction {
     public TempVariable lookupTemp(String name) {
         return tempH.get(name);
     }
+    public ArrayList<IRInstruction> getInstructions(){
+        return instructionList;
+    }
         
     public String toString() {
-        String returnString = String.format("FUNC %s (%s)%s\n{\n", funcName, params, returnType.toStringIR());
+        String returnString = String.format("FUNC %s\n{\n", irSignature());
         returnString += tempH.toString();
 
         //TODO: Indent based on type of instruction
@@ -45,6 +51,38 @@ public class IRFunction {
         returnString += "}\n";
         return returnString;
     }
+    public String irSignature() {
+        String paramString = "";
+        for(Type t : params) {
+            paramString += t.toStringIR();
+        }
+        return String.format("%s (%s)%s", funcName, paramString, returnType.toStringIR());
+    }
+    public String assemblySignature(){
+        String paramString = "";
+        String returnString;
+        for(Type t : params) {
+            if(t.equals(TypeEnum.STRING)){
+                paramString += jlString;
+            }
+            else{
+                paramString += t.toStringIR();
+            }
+        }
+
+        if(returnType.equals(TypeEnum.STRING)){
+            returnString = jlString;
+        }
+        else{
+            returnString = returnType.toStringIR();
+        }
+        return String.format("%s(%s)%s", funcName, paramString, returnString);
+    }
+    public List<String> assemblyPreamble() {
+        return tempH.preambleVarList();
+    }
+
+
 }
 
     

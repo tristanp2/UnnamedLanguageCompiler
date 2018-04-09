@@ -3,8 +3,9 @@ void less (int x, int y)
 	if (x < y)
 	{
 		print x;
+		print " is less than ";
 	}
-	print y;
+	println y;
 }
 
 void main()

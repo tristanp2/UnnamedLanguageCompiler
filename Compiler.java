@@ -41,12 +41,19 @@ public class Compiler {
     }
     public static void translate_to_IR(Program p, ArrayList<String> inputPath) {
         String progName = inputPath.get(inputPath.size()-1);
-        String progPath = String.join("/", inputPath) + ".ir";
+        String irPath = String.join("/", inputPath) + ".ir";
+        String progPath = String.join("/", inputPath) + ".j";
         try{
-            FileOutputStream fos = new FileOutputStream(progPath);
-            System.out.println("outputting IR to " + progPath);
-            IRPrintVisitor pv = new IRPrintVisitor(progName, fos);
-            p.accept(pv);
+            System.out.println("outputting IR to " + irPath);
+            FileOutputStream ios = new FileOutputStream(irPath);
+            IRVisitor irv = new IRVisitor(progName, ios);
+            p.accept(irv);
+
+            FileOutputStream pos = new FileOutputStream(progPath);
+            System.out.println("outputting assembly to " + progPath);
+            
+            CodeGen cg = new CodeGen(irv.irp, pos);
+            cg.generateAssembly();
         }
         catch(Exception e){
             System.out.println(e);

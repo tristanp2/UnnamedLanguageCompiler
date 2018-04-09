@@ -1,11 +1,12 @@
 package IR;
 
 public class IRAssignmentConstant extends IRAssignment {
-    String constant;
+    public String constant;
 
     public IRAssignmentConstant(TempVariable t, String c) {
         constant = c;
         destOperand = t;
+        instructionType = IRInstructionType.ASSNCONSTANT;
     }
 
     public String toString() {

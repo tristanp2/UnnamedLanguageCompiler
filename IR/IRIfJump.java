@@ -1,12 +1,13 @@
 package IR;
 
 public class IRIfJump extends IRInstruction {
-    TempVariable operand;
-    IRLabel dest;
+    public TempVariable operand;
+    public IRLabel dest;
 
     public IRIfJump(TempVariable o, IRLabel d) {
         operand = o;
         dest = d;
+        instructionType = IRInstructionType.IFJUMP;
     }
 
     public String toString() {

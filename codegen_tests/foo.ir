@@ -29,8 +29,10 @@ FUNC main ()V
 {
 TEMP 0:I;
 TEMP 1:I;
+TEMP 2:I;
 T0 := 2;
-T1 := CALL foo(T0 T0 );
+T1 := 2;
+T2 := CALL foo(T0 T1 );
 RETURN;
 }
 

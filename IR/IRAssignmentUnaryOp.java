@@ -1,14 +1,15 @@
 package IR;
 
 public class IRAssignmentUnaryOp extends IRAssignment {
-    TempVariable srcOperand;
-    String operator;
+    public TempVariable srcOperand;
+    public String operator;
 
 
     public IRAssignmentUnaryOp(TempVariable d, String op, TempVariable s) {
         destOperand = d;
         srcOperand = s;
         operator = op;
+        instructionType = IRInstructionType.ASSNUNARYOP;
     }
 
     public String toString() {

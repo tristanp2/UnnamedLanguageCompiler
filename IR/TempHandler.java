@@ -1,5 +1,6 @@
 package IR;
 import java.util.List;
+import java.util.ArrayList;
 import Environment.*;
 import Types.*;
 import java.io.*;
@@ -21,6 +22,16 @@ public class TempHandler {
         }
         return returnString;
     }
+    public List<String> preambleVarList() {
+        List<Object> l = tempEnvironment.getList();
+        List<String> sl = new ArrayList<String>();
+        for(Object o : l) {
+            TempVariable tv = (TempVariable)o;
+            sl.add(tv.toStringAssembly());
+        }
+        return sl;
+    }
+
     public TempVariable get(String key) {
         TempVariable tv = (TempVariable)tempEnvironment.lookup(key);
 
