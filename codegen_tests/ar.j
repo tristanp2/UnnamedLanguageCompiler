@@ -24,6 +24,42 @@
     .var 17 is T17 I from L_0 to L_1
     .limit stack 72
 L_0:
+    aconst_null
+    astore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    ldc 0
+    istore 4
+    ldc 0
+    istore 5
+    ldc 0
+    istore 6
+    ldc 0
+    istore 7
+    ldc 0
+    istore 8
+    ldc 0
+    istore 9
+    ldc 0
+    istore 10
+    ldc 0
+    istore 11
+    ldc 0
+    istore 12
+    ldc 0
+    istore 13
+    ldc 0
+    istore 14
+    ldc 0
+    istore 15
+    ldc 0
+    istore 16
+    ldc 0
+    istore 17
 ;         T0 := NEWARRAY I 3;
     ldc 3
     newarray int

@@ -22,6 +22,30 @@
     .var 15 is T15 I from L_0 to L_1
     .limit stack 64
 L_0:
+    ldc 0
+    istore 4
+    ldc 0
+    istore 5
+    ldc 0
+    istore 6
+    aconst_null
+    astore 7
+    aconst_null
+    astore 8
+    ldc 0
+    istore 9
+    ldc 0
+    istore 10
+    aconst_null
+    astore 11
+    aconst_null
+    astore 12
+    aconst_null
+    astore 13
+    ldc 0
+    istore 14
+    ldc 0
+    istore 15
 ;         T4 := 1;
     ldc 1
     istore 4
@@ -146,6 +170,16 @@ L_1:
     .var 4 is T4 C from L_4 to L_5
     .limit stack 20
 L_4:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    ldc 0
+    istore 4
 ;         T1 := 4;
     ldc 4
     istore 1

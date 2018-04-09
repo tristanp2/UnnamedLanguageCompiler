@@ -17,6 +17,20 @@
     .var 10 is T10 I from L_0 to L_1
     .limit stack 44
 L_0:
+    aconst_null
+    astore 3
+    ldc 0
+    istore 4
+    aconst_null
+    astore 5
+    ldc 0
+    istore 6
+    ldc 0
+    istore 7
+    aconst_null
+    astore 8
+    ldc 0
+    istore 10
 ;         T5 := NEWARRAY I 3;
     ldc 3
     newarray int
@@ -63,6 +77,12 @@ L_1:
     .var 2 is T2 I from L_2 to L_3
     .limit stack 12
 L_2:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
 ;         T0 := 2;
     ldc 2
     istore 0

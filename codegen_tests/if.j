@@ -11,6 +11,12 @@
     .var 4 is T4 Ljava/lang/String; from L_0 to L_1
     .limit stack 20
 L_0:
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    aconst_null
+    astore 4
 ;         T2 := T0 I< T1;
     iload 0
     iload 1
@@ -57,6 +63,10 @@ L_1:
     .var 1 is T1 I from L_4 to L_5
     .limit stack 8
 L_4:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
 ;         T0 := 2;
     ldc 2
     istore 0

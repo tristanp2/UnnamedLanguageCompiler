@@ -16,6 +16,22 @@
     .var 9 is T9 Z from L_0 to L_1
     .limit stack 40
 L_0:
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    ldc 0
+    istore 4
+    ldc 0
+    istore 5
+    ldc 0
+    istore 6
+    ldc 0
+    istore 7
+    ldc 0
+    istore 8
+    ldc 0
+    istore 9
 ;         T3 := 7;
     ldc 7
     istore 3
@@ -120,6 +136,10 @@ L_5:
     .var 3 is T3 F from L_6 to L_7
     .limit stack 16
 L_6:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
 ;         T0 := 2;
     ldc 2
     istore 0

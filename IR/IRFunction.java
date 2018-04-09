@@ -78,6 +78,9 @@ public class IRFunction {
         }
         return String.format("%s(%s)%s", funcName, paramString, returnString);
     }
+    public List<TempVariable> localList(){
+        return tempH.varList();
+    }
     public List<String> assemblyPreamble() {
         return tempH.preambleVarList();
     }

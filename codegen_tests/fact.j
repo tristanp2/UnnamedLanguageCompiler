@@ -16,6 +16,24 @@
     .var 9 is T9 I from L_0 to L_1
     .limit stack 40
 L_0:
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    ldc 0
+    istore 4
+    ldc 0
+    istore 5
+    ldc 0
+    istore 6
+    ldc 0
+    istore 7
+    ldc 0
+    istore 8
+    ldc 0
+    istore 9
 ;         T2 := 1;
     ldc 1
     istore 2
@@ -82,6 +100,12 @@ L_1:
     .var 2 is T2 I from L_4 to L_5
     .limit stack 12
 L_4:
+    aconst_null
+    astore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
 ;         T0 := "The factorial of 8 is ";
     ldc "The factorial of 8 is "
     astore 0

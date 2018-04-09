@@ -17,6 +17,28 @@
     .var 10 is T10 I from L_0 to L_1
     .limit stack 44
 L_0:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
+    ldc 0
+    istore 3
+    ldc 0
+    istore 4
+    ldc 0
+    istore 5
+    ldc 0
+    istore 6
+    ldc 0
+    istore 7
+    ldc 0
+    istore 8
+    ldc 0
+    istore 9
+    ldc 0
+    istore 10
 ;         T3 := 1;
     ldc 1
     istore 3

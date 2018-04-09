@@ -9,6 +9,8 @@
     .var 2 is T2 I from L_0 to L_1
     .limit stack 12
 L_0:
+    ldc 0
+    istore 2
 ;         T2 := T0 I+ T1;
     iload 0
     iload 1
@@ -26,6 +28,12 @@ L_1:
     .var 2 is T2 I from L_2 to L_3
     .limit stack 12
 L_2:
+    ldc 0
+    istore 0
+    ldc 0
+    istore 1
+    ldc 0
+    istore 2
 ;         T0 := 2;
     ldc 2
     istore 0

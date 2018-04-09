@@ -223,12 +223,12 @@ L_8:
 	ldc 65
 	istore 2
 .line 60
-;		T3 := 'B';
-	ldc 66
+;		T3 := 'C';
+	ldc 67
 	istore 3
 .line 61
-;		T4 := 'C';
-	ldc 67
+;		T4 := 'B';
+	ldc 66
 	istore 4
 .line 62
 ;		CALL towersOfHanoi(T0 T2 T3 T4 );

@@ -43,6 +43,22 @@ public class CodeGen {
             }
             out.printf("%s.limit stack %d\n",indent, sl.size()*4);
             out.printf("L_%d:\n",label1);
+            List<TempVariable> tl = f.localList();
+            for(TempVariable tv : tl) {
+                switch(tv.type.typeEnum) {
+                    case INTEGER:
+                    case CHAR:
+                    case BOOLEAN:
+                        out.printf("%sldc 0\n", indent);
+                        out.printf("%sistore %d\n",indent, tv.num);
+                        break;
+                    case STRING:
+                    case ARRAY:
+                        out.printf("%saconst_null\n",indent);
+                        out.printf("%sastore %d\n",indent, tv.num);
+                        break;
+                }
+            }
             for(IRInstruction i : f.getInstructions()) {
                 //System.out.println(i);
                 switch(i.instructionType) {

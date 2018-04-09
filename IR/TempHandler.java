@@ -22,6 +22,17 @@ public class TempHandler {
         }
         return returnString;
     }
+    public List<TempVariable> varList() {
+        List<Object> l = tempEnvironment.getList();
+        List<TempVariable> tl = new ArrayList<TempVariable>();
+        for(Object o : l) {
+            TempVariable tv = (TempVariable)o;
+            if(tv.tempType == TempEnum.PARAMETER)
+                continue;
+            tl.add(tv);
+        }
+        return tl;
+    }
     public List<String> preambleVarList() {
         List<Object> l = tempEnvironment.getList();
         List<String> sl = new ArrayList<String>();
