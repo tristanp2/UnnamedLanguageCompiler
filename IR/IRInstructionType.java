@@ -1,0 +1,18 @@
+package IR;
+
+public enum IRInstructionType {
+    ASSNARRAYINIT,
+    ASSNBINARYOP,
+    ASSNCONSTANT,
+    ASSNFROMARRAY,
+    ASSNOPERAND,
+    ASSNTOARRAY,
+    ASSNUNARYOP,
+    CALL,
+    IFJUMP,
+    JUMP,
+    LABEL,
+    PRINT,
+    PRINTLN,
+    RETURN
+}
