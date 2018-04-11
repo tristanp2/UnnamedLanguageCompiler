@@ -12,6 +12,6 @@ public class IRAssignmentNewArray extends IRAssignment {
     }
 
     public String toString() {
-        return String.format("%s := NEWARRAY(%s)%d;", destOperand, arrayElementType.toStringIR(), arraySize);
+        return String.format("%s := NEWARRAY %s %d;", destOperand, arrayElementType.toStringIR(), arraySize);
     }
 }

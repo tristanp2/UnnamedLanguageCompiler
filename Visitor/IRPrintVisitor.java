@@ -353,6 +353,11 @@ public class IRPrintVisitor implements BaseVisitor{
     public TempVariable visit(VariableDeclaration vd) throws Exception{
         TempVariable tempDecl = currentFunction.addTemp(vd.id.name, vd.type.type);
 
+        if(vd.type.type.typeEnum == TypeEnum.ARRAY){
+            ArrayType at = (ArrayType)vd.type.type;
+            currentFunction.addInstruction(new IRAssignmentNewArray(tempDecl, at.elementType, at.size)); 
+        }
+
         return null;
     }
     public TempVariable visit(WhileStatement ws) throws Exception{
