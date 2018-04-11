@@ -76,7 +76,10 @@ public class Compiler {
 			    print(astRoot);
             }
             type_check(astRoot);
-            translate_to_IR(astRoot, args[0]);
+            String[] inputFileArray = args[0].split("[/]");
+            String programName = inputFileArray[inputFileArray.length - 1];
+            programName = programName.split("[.]")[0];
+            translate_to_IR(astRoot, programName);
 		}
 		catch (RecognitionException e )	{
 			// A lexical or parsing error occured.

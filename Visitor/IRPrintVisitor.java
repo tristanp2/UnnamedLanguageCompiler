@@ -89,7 +89,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)ee.expr1.accept(this);
         if(ee.expr2 != null){
             tempE2 = (TempVariable)ee.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+            TempVariable destOperand = currentFunction.addTemp("", new BooleanType());
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "==", tempE2)); 
             return destOperand;
@@ -147,7 +147,6 @@ public class IRPrintVisitor implements BaseVisitor{
         Type fType = (Type)funcEnv.lookup(fc.id.name);
         IRCall ic = new IRCall(fc.id.name);
         TempVariable dest = null;
-        System.out.println("1");
         if(fc.exprList != null){
             ExpressionList el = fc.exprList;
             int size = el.size();
@@ -204,7 +203,7 @@ public class IRPrintVisitor implements BaseVisitor{
         //  if condition was just a boolean variable, and detecting that is inconvenient
         TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
         currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
-        currentFunction.addInstruction(new IRIfJump(condTemp, l1));
+        currentFunction.addInstruction(new IRIfJump(invCondTemp, l1));
         is.ifBlock.accept(this);
 
         if(is.hasElse()){
@@ -236,7 +235,7 @@ public class IRPrintVisitor implements BaseVisitor{
         tempE1 = (TempVariable)lte.expr1.accept(this);
         if(lte.expr2 != null){
             tempE2 = (TempVariable)lte.expr2.accept(this);
-            TempVariable destOperand = currentFunction.addTemp("", tempE1.type);
+            TempVariable destOperand = currentFunction.addTemp("", new BooleanType());
 
             currentFunction.addInstruction(new IRAssignmentBinaryOp(destOperand, tempE1, "<", tempE2)); 
             return destOperand;
@@ -272,12 +271,12 @@ public class IRPrintVisitor implements BaseVisitor{
     }
     public TempVariable visit(PrintStatement ps) throws Exception{
         TempVariable temp = (TempVariable)ps.expr.accept(this); 
-        currentFunction.addInstruction(new IRPrintLn(temp));
+        currentFunction.addInstruction(new IRPrint(temp));
         return null;
     }
     public TempVariable visit(Program p) throws Exception{
         int size = p.size();
-        out.println(progName);
+        out.println("PROG " + progName);
         irp = new IRProgram();
         //pass to pickup the function decs first
         for(int i=0; i<size; i++){
@@ -366,7 +365,7 @@ public class IRPrintVisitor implements BaseVisitor{
         //  if condition was just a boolean variable, and detecting that is inconvenient
         TempVariable invCondTemp = currentFunction.addTemp(new BooleanType());
         currentFunction.addInstruction(new IRAssignmentUnaryOp(invCondTemp, "!", condTemp));
-        currentFunction.addInstruction(new IRIfJump(condTemp, l2));
+        currentFunction.addInstruction(new IRIfJump(invCondTemp, l2));
         ws.body.accept(this);
         currentFunction.addInstruction(new IRJump(l1));
         currentFunction.addInstruction(l2);

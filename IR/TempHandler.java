@@ -17,7 +17,7 @@ public class TempHandler {
         String returnString = "";
         for(Object o : l) {
             TempVariable tv = (TempVariable)o;
-            returnString += tv.toStringDec() + "\n";
+            returnString += tv.toStringDec() + ";\n";
         }
         return returnString;
     }
