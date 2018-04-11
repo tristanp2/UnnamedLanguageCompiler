@@ -1,0 +1,11 @@
+void main(){
+    int x;
+    int b;
+    x = 0;
+    b = 10;
+    while(0 < b) {
+        x = x + 1;
+        println x;
+        b = b - 1;
+    }
+}

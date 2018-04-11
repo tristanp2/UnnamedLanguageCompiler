@@ -1,0 +1,9 @@
+void main() {
+    int x;
+    int z;
+    float y;
+    x = x + 1;
+    z = z + 1;
+    y = 0.02;
+    y = 2.0 * y;
+}

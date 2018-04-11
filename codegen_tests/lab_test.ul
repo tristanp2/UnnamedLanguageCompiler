@@ -1,0 +1,20 @@
+void main() { 
+    println "Printing 1..10"; 
+    forLoop(1, 10); 
+} 
+void forLoop(int start, int stop) { 
+    int i; 
+    boolean b;
+    i = start; 
+    print "start i: ";
+    println i;
+    print "stop i: ";
+    println stop;
+    b = i < stop;
+    print "expr: ";
+    println b;
+    while (i < stop) { 
+        print i; 
+        i = i + 1; 
+    } 
+} 
