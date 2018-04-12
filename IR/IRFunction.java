@@ -22,7 +22,7 @@ public class IRFunction {
     }
     public TempVariable addLiteral(String value, Type t) {
         String litName = literalName(value,t);
-        return tempH.add(litName, t);
+        return tempH.add(t);
     }
     public TempVariable lookupLiteral(String value, Type t) {
         String litName = literalName(value,t);
